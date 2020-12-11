@@ -137,14 +137,14 @@ afterEvaluate {
             }
         }
     }
-}
 
-if (isWithSigning) {
-    signing {
-        sign(
-            *publishing.publications
-                .filterIsInstance<MavenPublication>()
-                .toTypedArray()
-        )
+    if (isWithSigning) {
+        signing {
+            sign(
+                *publishing.publications
+                    .filterIsInstance<MavenPublication>()
+                    .toTypedArray()
+            )
+        }
     }
 }
