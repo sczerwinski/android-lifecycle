@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    id("de.mannodermaus.android-junit5")
     id("io.gitlab.arturbosch.detekt") version "1.14.2"
     id("org.jetbrains.dokka") version "1.4.20"
     `maven-publish`
