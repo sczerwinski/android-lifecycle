@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("io.gitlab.arturbosch.detekt") version "1.14.2"
+    id("org.jetbrains.dokka") version "1.4.20"
     `maven-publish`
 }
 
@@ -27,6 +28,48 @@ android {
     }
 }
 
+tasks {
+
+    dokkaJavadoc {
+        outputDirectory.set(buildDir.resolve("javadoc"))
+        dokkaSourceSets {
+            all {
+                logger.quiet("Source set: $name")
+            }
+            named("main") {
+                moduleName.set("Kotlin utilities")
+                includes.from(files("packages.md"))
+            }
+        }
+    }
+
+    dokkaJekyll {
+        outputDirectory.set(buildDir.resolve("jekyll"))
+        dokkaSourceSets {
+            named("main") {
+                moduleName.set("Kotlin utilities")
+                includes.from(files("packages.md"))
+            }
+        }
+    }
+
+    val javadocJar = create<Jar>("javadocJar") {
+        dependsOn.add(dokkaJavadoc)
+        archiveClassifier.set("javadoc")
+        from(dokkaJavadoc)
+    }
+
+    val sourcesJar = create<Jar>("sourcesJar") {
+        archiveClassifier.set("sources")
+        from(android.sourceSets.named("main").get().java.srcDirs)
+    }
+
+    artifacts {
+        archives(javadocJar)
+        archives(sourcesJar)
+    }
+}
+
 afterEvaluate {
     publishing {
         publications {
@@ -35,6 +78,8 @@ afterEvaluate {
                 artifactId = "${project.parent?.name}-${project.name}"
                 groupId = "${project.group}"
                 version = "${project.version}"
+                artifact(tasks["javadocJar"])
+                artifact(tasks["sourcesJar"])
                 val libDescription: String by project.rootProject
                 val libUrl: String by project.rootProject
                 val gitUrl: String by project.rootProject
