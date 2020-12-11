@@ -10,3 +10,4 @@ pluginManagement {
 rootProject.name = "android-lifecycle"
 
 include(":lifecycle:livedata")
+include(":lifecycle:livedata-test-junit5")
