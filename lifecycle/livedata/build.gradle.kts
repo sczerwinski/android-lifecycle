@@ -34,9 +34,6 @@ tasks {
     dokkaJavadoc {
         outputDirectory.set(buildDir.resolve("javadoc"))
         dokkaSourceSets {
-            all {
-                logger.quiet("Source set: $name")
-            }
             named("main") {
                 moduleName.set("Kotlin utilities")
                 includes.from(files("packages.md"))
