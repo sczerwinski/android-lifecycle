@@ -5,6 +5,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.14.2"
     id("org.jetbrains.dokka") version "1.4.20"
     `maven-publish`
+    signing
 }
 
 android {
@@ -68,6 +69,9 @@ tasks {
     }
 }
 
+val isWithSigning = hasProperty("signing.keyId")
+val isSnapshot = version.toString().endsWith("SNAPSHOT")
+
 afterEvaluate {
     publishing {
         publications {
@@ -118,8 +122,29 @@ afterEvaluate {
 
         repositories {
             maven {
-                url = uri("$buildDir/maven")
+                if (System.getenv("SONATYPE_USERNAME") != null) {
+                    url = uri(
+                        if (isSnapshot) "https://oss.sonatype.org/content/repositories/snapshots/"
+                        else "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                    )
+                    credentials {
+                        username = System.getenv("SONATYPE_USERNAME")
+                        password = System.getenv("SONATYPE_PASSWORD")
+                    }
+                } else {
+                    url = uri("$buildDir/maven")
+                }
             }
         }
+    }
+}
+
+if (isWithSigning) {
+    signing {
+        sign(
+            *publishing.publications
+                .filterIsInstance<MavenPublication>()
+                .toTypedArray()
+        )
     }
 }
