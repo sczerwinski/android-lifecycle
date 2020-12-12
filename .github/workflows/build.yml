@@ -75,7 +75,7 @@ jobs:
       - name: Generate Documentation
         run: ./gradlew dokkaJavadoc dokkaJekyll --stacktrace
 
-  assembleDebug:
+  assembleRelease:
     name: Assemble Release AAR
     needs: gradleValidation
     runs-on: ubuntu-latest
