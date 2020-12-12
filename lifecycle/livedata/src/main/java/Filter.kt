@@ -44,8 +44,6 @@ fun <T> LiveData<T>.filter(
 /**
  * Returns a [LiveData] emitting only non-null values from this LiveData.
  *
- * Null check will be executed on the main thread.
- *
  * **Example:**
  * ```
  * val userLiveData: LiveData<User?> = ...
@@ -62,8 +60,6 @@ fun <T> LiveData<T?>.filterNotNull(): LiveData<T> {
 
 /**
  * Returns a [LiveData] emitting only values of type [R] from this LiveData.
- *
- * Type check will be executed on the main thread.
  *
  * **Example:**
  * ```

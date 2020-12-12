@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
+@DisplayName("Tests for filtering LiveData")
 class FilterTest {
 
     @RelaxedMockK

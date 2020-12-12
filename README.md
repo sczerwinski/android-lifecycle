@@ -27,6 +27,14 @@
   ```
 </details>
 
+### Types
+
+<details>
+  <summary><code>ConstantLiveData</code></summary>
+
+  [LiveData] that always emits a single constant value.
+</details>
+
 ### Transformations
 
 <details>
@@ -113,6 +121,58 @@
       timeInMillis = 1000L,
       context = viewModelScope.coroutineContext
   )
+  ```
+</details>
+
+<details>
+  <summary><code>merge</code></summary>
+
+  Returns a [LiveData] emitting each value emitted by any of the given LiveData.
+
+  ```kotlin
+  val serverError: LiveData<String> = // ...
+  val databaseError: LiveData<String> = // ...
+  val error: LiveData<String> = serverError merge databaseError
+  ```
+
+  ```kotlin
+  val serverError: LiveData<String> = // ...
+  val databaseError: LiveData<String> = // ...
+  val fileError: LiveData<String> = // ...
+  val error: LiveData<String> = merge(serverError, databaseError, fileError)
+  ```
+</details>
+
+<details>
+  <summary><code>combineLatest</code></summary>
+
+  Returns a [LiveData] emitting pairs, triples or lists of latest values emitted by the given LiveData.
+
+  ```kotlin
+  val userLiveData: LiveData<User> = // ...
+  val avatarUrlLiveData: LiveData<String> = // ...
+  val userWithAvatar: LiveData<Pair<User?, String?>> = combineLatest(userLiveData, avatarUrlLiveData)
+  ```
+
+  ```kotlin
+  val userLiveData: LiveData<User> = ...
+  val avatarUrlLiveData: LiveData<String> = ...
+  val userWithAvatar: LiveData<UserWithAvatar> =
+      combineLatest(userLiveData, avatarUrlLiveData) { user, avatarUrl ->
+          UserWithAvatar(user, avatarUrl)
+      }
+  ```
+</details>
+
+<details>
+  <summary><code>defaultIfEmpty</code></summary>
+
+  Returns a [LiveData] that emits the values emitted by this LiveData or a specified default value if this LiveData has
+  not yet emitted any values at the time of observing.
+
+  ```kotlin
+  val errorLiveData: LiveData<String> = // ...
+  val statusLiveData: LiveData<String?> = errorLiveData.defaultIfEmpty("No errors")
   ```
 </details>
 

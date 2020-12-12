@@ -19,7 +19,6 @@ package it.czerwinski.android.lifecycle
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
 
 /**
  * Returns a [LiveData] emitting non-null accumulated value starting with the first non-null value
@@ -68,18 +67,9 @@ fun <T> LiveData<T?>.reduce(
     operation: (T?, T?) -> T?
 ): LiveData<T?> {
     val result = MediatorLiveData<T>()
-    result.addSource(this, object : Observer<T?> {
-
-        private var firstTime = true
-
-        override fun onChanged(x: T?) {
-            if (firstTime) {
-                firstTime = false
-                result.value = x
-            } else {
-                result.value = operation(result.value, x)
-            }
-        }
-    })
+    result.addSource(this, DistinguishedFirstTimeObserver(
+        firstTimeObserver = { x -> result.value = x },
+        nextTimeObserver = { x -> result.value = operation(result.value, x) }
+    ))
     return result
 }

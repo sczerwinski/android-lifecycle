@@ -32,6 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExperimentalCoroutinesApi
 @ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class, TestCoroutineDispatcherExtension::class)
+@DisplayName("Tests for throttling LiveData")
 class ThrottleTest {
 
     @RelaxedMockK
