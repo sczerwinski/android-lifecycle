@@ -18,9 +18,10 @@ allprojects {
 
     val libGroupId: String by project
     val libVersion: String by project
+    val libVersionSuffix: String by project
 
     group = libGroupId
-    version = libVersion
+    version = if (libVersion.endsWith("SNAPSHOT")) libVersion else "$libVersion-$libVersionSuffix"
 
     repositories {
         google()
