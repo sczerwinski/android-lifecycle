@@ -21,7 +21,7 @@ allprojects {
     val libVersionSuffix: String by project
 
     group = libGroupId
-    version = if (libVersion.endsWith("SNAPSHOT")) libVersion else "$libVersion-$libVersionSuffix"
+    version = if (libVersionSuffix.isBlank()) libVersion else "$libVersion-$libVersionSuffix"
 
     repositories {
         google()
