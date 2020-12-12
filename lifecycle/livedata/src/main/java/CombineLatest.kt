@@ -23,8 +23,6 @@ import androidx.lifecycle.MediatorLiveData
 /**
  * Returns a [LiveData] emitting pairs of latest values emitted by the [first] and the [second] LiveData.
  *
- * Combining will be executed on the main thread.
- *
  * **Example:**
  * ```
  * val userLiveData: LiveData<User> = ...
@@ -41,8 +39,6 @@ fun <A, B> combineLatest(first: LiveData<A>, second: LiveData<B>): LiveData<Pair
 
 /**
  * Returns a [LiveData] emitting triples of latest values emitted by the [first], the [second] and the [third] LiveData.
- *
- * Combining will be executed on the main thread.
  */
 fun <A, B, C> combineLatest(first: LiveData<A>, second: LiveData<B>, third: LiveData<C>): LiveData<Triple<A?, B?, C?>> {
     val result = MediatorLiveData<Triple<A?, B?, C?>>()
@@ -54,8 +50,6 @@ fun <A, B, C> combineLatest(first: LiveData<A>, second: LiveData<B>, third: Live
 
 /**
  * Returns a [LiveData] emitting lists of latest values emitted by the given source LiveData.
- *
- * Combining will be executed on the main thread.
  */
 fun <T> combineLatest(vararg sources: LiveData<T>): LiveData<List<T?>> {
     val result = MediatorLiveData<List<T?>>()

@@ -23,8 +23,6 @@ import androidx.lifecycle.MediatorLiveData
 /**
  * Returns a [LiveData] emitting each value emitted by either this or [other] LiveData.
  *
- * Merging will be executed on the main thread.
- *
  * **Example:**
  * ```
  * val serverError: LiveData<String> = ...
@@ -41,8 +39,6 @@ infix fun <T> LiveData<T>.merge(other: LiveData<T>): LiveData<T> {
 
 /**
  * Returns a [LiveData] emitting each value emitted by any of the given LiveData.
- *
- * Merging will be executed on the main thread.
  *
  * **Example:**
  * ```
