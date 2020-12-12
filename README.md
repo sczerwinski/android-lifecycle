@@ -27,6 +27,14 @@
   ```
 </details>
 
+### Types
+
+<details>
+  <summary><code>ConstantLiveData</code></summary>
+
+  [LiveData] that always emits a single constant value.
+</details>
+
 ### Transformations
 
 <details>

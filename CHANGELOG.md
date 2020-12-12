@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- `ConstantLiveData`
 - Transformations for LiveData:
   - `merge`
   - `combineLatest`
