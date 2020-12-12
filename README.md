@@ -164,6 +164,18 @@
   ```
 </details>
 
+<details>
+  <summary><code>defaultIfEmpty</code></summary>
+
+  Returns a [LiveData] that emits the values emitted by this LiveData or a specified default value if this LiveData has
+  not yet emitted any values at the time of observing.
+
+  ```kotlin
+  val errorLiveData: LiveData<String> = // ...
+  val statusLiveData: LiveData<String?> = errorLiveData.defaultIfEmpty("No errors")
+  ```
+</details>
+
 ## LivaData Testing Utilities
 
 [![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit5)][lifecycle-livedata-test-junit5-release]

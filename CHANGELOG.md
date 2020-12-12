@@ -6,6 +6,7 @@
 - Transformations for LiveData:
   - `merge`
   - `combineLatest`
+  - `defaultIfEmpty`
 
 ## [1.0.0-ALPHA1]
 ### Added
