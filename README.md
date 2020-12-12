@@ -1,10 +1,11 @@
-![Build](https://github.com/sczerwinski/android-lifecycle/workflows/Build/badge.svg)
+[![Build](https://github.com/sczerwinski/android-lifecycle/workflows/Build/badge.svg)][ci-build]
 
 # Extensions for Jetpack Lifecycle
 
 ## LiveData Extensions
 
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.czerwinski.android.lifecycle/lifecycle-livedata?server=https%3A%2F%2Foss.sonatype.org)
+[![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata)][lifecycle-livedata-release]
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.czerwinski.android.lifecycle/lifecycle-livedata?server=https%3A%2F%2Foss.sonatype.org)][lifecycle-livedata-snapshot]
 
 <details>
   <summary>Kotlin</summary>
@@ -117,7 +118,8 @@
 
 ## LivaData Testing Utilities
 
-![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit5?server=https%3A%2F%2Foss.sonatype.org)
+[![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit5)][lifecycle-livedata-test-junit5-release]
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit5?server=https%3A%2F%2Foss.sonatype.org)][lifecycle-livedata-test-junit5-snapshot]
 
 <details>
   <summary>Kotlin</summary>
@@ -174,6 +176,12 @@
   ```
 </details>
 
+
+[ci-build]: https://github.com/sczerwinski/android-lifecycle/actions?query=workflow%3ABuild
+[lifecycle-livedata-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata/
+[lifecycle-livedata-test-junit5-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit5/
+[lifecycle-livedata-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata/
+[lifecycle-livedata-test-junit5-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit5/
 
 [LiveData]: https://developer.android.com/reference/androidx/lifecycle/LiveData
 [InstantTaskExecutorRule]: https://developer.android.com/reference/androidx/arch/core/executor/testing/InstantTaskExecutorRule
