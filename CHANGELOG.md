@@ -4,6 +4,7 @@
 ### Added
 - Transformations for LiveData:
   - `merge`
+  - `combineLatest`
 
 ## [1.0.0-ALPHA1]
 ### Added

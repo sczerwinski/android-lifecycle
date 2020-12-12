@@ -135,6 +135,27 @@
   ```
 </details>
 
+<details>
+  <summary><code>combineLatest</code></summary>
+
+  Returns a [LiveData] emitting pairs, triples or lists of latest values emitted by the given LiveData.
+
+  ```kotlin
+  val userLiveData: LiveData<User> = // ...
+  val avatarUrlLiveData: LiveData<String> = // ...
+  val userWithAvatar: LiveData<Pair<User?, String?>> = combineLatest(userLiveData, avatarUrlLiveData)
+  ```
+
+  ```kotlin
+  val userLiveData: LiveData<User> = ...
+  val avatarUrlLiveData: LiveData<String> = ...
+  val userWithAvatar: LiveData<UserWithAvatar> =
+      combineLatest(userLiveData, avatarUrlLiveData) { user, avatarUrl ->
+          UserWithAvatar(user, avatarUrl)
+      }
+  ```
+</details>
+
 ## LivaData Testing Utilities
 
 [![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit5)][lifecycle-livedata-test-junit5-release]
