@@ -2,16 +2,9 @@
 
 ## [Unreleased]
 ### Added
+- Transformations for LiveData:
+  - `merge`
 
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.0.0-ALPHA1]
 ### Added
 - Transformations for LiveData:

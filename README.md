@@ -116,6 +116,25 @@
   ```
 </details>
 
+<details>
+  <summary><code>merge</code></summary>
+
+  Returns a [LiveData] emitting each value emitted by any of the given LiveData.
+
+  ```kotlin
+  val serverError: LiveData<String> = // ...
+  val databaseError: LiveData<String> = // ...
+  val error: LiveData<String> = serverError merge databaseError
+  ```
+
+  ```kotlin
+  val serverError: LiveData<String> = // ...
+  val databaseError: LiveData<String> = // ...
+  val fileError: LiveData<String> = // ...
+  val error: LiveData<String> = merge(serverError, databaseError, fileError)
+  ```
+</details>
+
 ## LivaData Testing Utilities
 
 [![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit5)][lifecycle-livedata-test-junit5-release]
