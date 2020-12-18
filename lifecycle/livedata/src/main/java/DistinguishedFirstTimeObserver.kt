@@ -15,7 +15,7 @@
  *
  */
 
-package it.czerwinski.android.lifecycle
+package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.Observer
 

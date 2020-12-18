@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="it.czerwinski.android.lifecycle" />
+<manifest package="it.czerwinski.android.lifecycle.livedata" />
