@@ -228,8 +228,8 @@
 <details>
   <summary><code>addDirectSource</code></summary>
 
-  Starts to listen the given [source] LiveData.
-  Whenever [source] value is changed, it is set as a new value of this [MediatorLiveData].
+  Starts to listen the given source LiveData.
+  Whenever source value is changed, it is set as a new value of this [MediatorLiveData].
 
   ```kotlin
   mediatorLiveData.addDirectSource(liveData)
