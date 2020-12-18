@@ -32,8 +32,8 @@ import androidx.lifecycle.MediatorLiveData
  */
 infix fun <T> LiveData<T>.merge(other: LiveData<T>): LiveData<T> {
     val result = MediatorLiveData<T>()
-    result.addSource(this) { x -> result.value = x }
-    result.addSource(other) { x -> result.value = x }
+    result.addDirectSource(this)
+    result.addDirectSource(other)
     return result
 }
 
@@ -51,7 +51,7 @@ infix fun <T> LiveData<T>.merge(other: LiveData<T>): LiveData<T> {
 fun <T> merge(vararg sources: LiveData<T>): LiveData<T> {
     val result = MediatorLiveData<T>()
     for (source in sources) {
-        result.addSource(source) { x -> result.value = x }
+        result.addDirectSource(source)
     }
     return result
 }
