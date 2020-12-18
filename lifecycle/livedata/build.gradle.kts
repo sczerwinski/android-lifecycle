@@ -39,13 +39,15 @@ dependencies {
     testImplementation("io.mockk:mockk:1.10.2")
 }
 
+val libDescription: String by project.rootProject
+
 tasks {
 
     dokkaJavadoc {
         outputDirectory.set(buildDir.resolve("javadoc"))
         dokkaSourceSets {
             named("main") {
-                moduleName.set("Kotlin utilities")
+                moduleName.set(libDescription)
                 includes.from(files("packages.md"))
             }
         }
@@ -55,7 +57,7 @@ tasks {
         outputDirectory.set(buildDir.resolve("jekyll"))
         dokkaSourceSets {
             named("main") {
-                moduleName.set("Kotlin utilities")
+                moduleName.set(libDescription)
                 includes.from(files("packages.md"))
             }
         }
