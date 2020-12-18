@@ -2,16 +2,9 @@
 
 ## [Unreleased]
 ### Added
+- Transformations for LiveData:
+  - `switch`
 
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.0.0-ALPHA2]
 ### Added
 - `ConstantLiveData`

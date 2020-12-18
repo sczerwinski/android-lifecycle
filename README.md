@@ -165,6 +165,18 @@
 </details>
 
 <details>
+  <summary><code>switch</code></summary>
+
+  Converts [LiveData] that emits other LiveData into a single LiveData that emits the items emitted by the most
+  recently emitted LiveData.
+
+  ```kotlin
+  val sourcesLiveData: LiveData<LiveData<String>> = // ...
+  val resultLiveData: LiveData<String?> = sourcesLiveData.switch()
+  ```
+</details>
+
+<details>
   <summary><code>defaultIfEmpty</code></summary>
 
   Returns a [LiveData] that emits the values emitted by this LiveData or a specified default value if this LiveData has
