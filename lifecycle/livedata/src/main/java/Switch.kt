@@ -42,7 +42,7 @@ fun <T> LiveData<LiveData<T>>.switch(): LiveData<T> {
             }
             source = newSource
             if (newSource != null) {
-                result.addSource(newSource) { x -> result.value = x }
+                result.addDirectSource(newSource)
             }
         }
     })

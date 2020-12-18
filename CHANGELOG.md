@@ -2,16 +2,9 @@
 
 ## [Unreleased]
 ### Added
+- Extensions for MediatorLiveData:
+  - `addDirectSource`
 
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.0.0-BETA1]
 ### Added
 - `GroupedLiveData`

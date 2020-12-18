@@ -17,23 +17,23 @@
 
 package it.czerwinski.android.lifecycle
 
+import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 
 /**
- * Returns a [GroupedLiveData] providing a set of [LiveData], each emitting a different subset of values from this
- * LiveData, based on the result of the given [keySelector] function.
+ * Starts to listen the given [source] LiveData.
+ * Whenever [source] value is changed, it is set as a new value of this [MediatorLiveData].
  *
- * [keySelector] will be executed on the main thread.
+ * If the given LiveData is already added as a source [IllegalArgumentException] will be thrown.
  *
- * **Example:**
+ * Equivalent to:
  * ```
- * val userLiveData: LiveData<User> = ...
- * val userByStatusLiveData: GroupedLiveData<UserStatus, User> = errorLiveData.groupBy { user -> user.status }
- * val activeUserLiveData: LiveData<User> = userByStatusLiveData[UserStatus.ACTIVE]
+ * mediatorLiveData.addSource(liveData) { x -> mediatorLiveData.value = x }
  * ```
  */
-fun <K, V> LiveData<V>.groupBy(keySelector: (V) -> K): GroupedLiveData<K, V> {
-    val result = GroupedLiveData(keySelector)
-    result.addDirectSource(this)
-    return result
+@Suppress("NOTHING_TO_INLINE")
+@MainThread
+inline fun <T> MediatorLiveData<in T>.addDirectSource(source: LiveData<out T>) {
+    addSource(source) { x -> value = x }
 }

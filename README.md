@@ -42,7 +42,7 @@
   executed on subsequent values emitted by the source LiveData.
 </details>
 
-### Transformations
+### LiveData Transformations
 
 <details>
   <summary><code>mapNotNull</code></summary>
@@ -220,6 +220,23 @@
   ```kotlin
   val errorLiveData: LiveData<String> = // ...
   val statusLiveData: LiveData<String?> = errorLiveData.defaultIfEmpty("No errors")
+  ```
+</details>
+
+### MediatorLiveData Extensions
+
+<details>
+  <summary><code>addDirectSource</code></summary>
+
+  Starts to listen the given [source] LiveData.
+  Whenever [source] value is changed, it is set as a new value of this [MediatorLiveData].
+
+  ```kotlin
+  mediatorLiveData.addDirectSource(liveData)
+  ```
+  is equivalent to:
+  ```kotlin
+  mediatorLiveData.addSource(liveData) { x -> mediatorLiveData.value = x }
   ```
 </details>
 
