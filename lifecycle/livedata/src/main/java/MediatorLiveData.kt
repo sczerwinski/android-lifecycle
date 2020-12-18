@@ -15,7 +15,7 @@
  *
  */
 
-package it.czerwinski.android.lifecycle
+package it.czerwinski.android.lifecycle.livedata
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData

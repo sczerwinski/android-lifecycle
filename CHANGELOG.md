@@ -1,17 +1,9 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-
 ### Changed
+- **BREAKING CHANGE:** Changed package names in `lifecycle-livedata` and `lifecycle-livedata-test-junit5`
 
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.0.0-BETA2]
 ### Added
 - Extensions for MediatorLiveData:

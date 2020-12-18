@@ -15,7 +15,7 @@
  *
  */
 
-package it.czerwinski.android.lifecycle.test.junit5
+package it.czerwinski.android.lifecycle.livedata.test.junit5
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
