@@ -3,6 +3,7 @@
 ## [Unreleased]
 ### Added
 - Transformations for LiveData:
+  - `delayStart`
   - `switch`
 
 ## [1.0.0-ALPHA2]

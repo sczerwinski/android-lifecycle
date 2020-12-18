@@ -125,6 +125,21 @@
 </details>
 
 <details>
+  <summary><code>delayStart</code></summary>
+
+  Returns a [LiveData] emitting values from this LiveData, after dropping values followed by newer values before
+  `timeInMillis` expires since the result LiveData has been created.
+
+  ```kotlin
+  val resultLiveData: LiveData<ResultData> = // ...
+  val delayedResultLiveData: LiveData<ResultData> = resultLiveData.delayStart(
+      timeInMillis = 1000L,
+      context = viewModelScope.coroutineContext
+  )
+  ```
+</details>
+
+<details>
   <summary><code>merge</code></summary>
 
   Returns a [LiveData] emitting each value emitted by any of the given LiveData.
