@@ -35,6 +35,13 @@
   [LiveData] that always emits a single constant value.
 </details>
 
+<details>
+  <summary><code>GroupedLiveData</code></summary>
+
+  [MediatorLiveData] subclass which provides a separate [LiveData] per each result returned by `keySelector` function
+  executed on subsequent values emitted by the source LiveData.
+</details>
+
 ### Transformations
 
 <details>
@@ -125,6 +132,21 @@
 </details>
 
 <details>
+  <summary><code>delayStart</code></summary>
+
+  Returns a [LiveData] emitting values from this LiveData, after dropping values followed by newer values before
+  `timeInMillis` expires since the result LiveData has been created.
+
+  ```kotlin
+  val resultLiveData: LiveData<ResultData> = // ...
+  val delayedResultLiveData: LiveData<ResultData> = resultLiveData.delayStart(
+      timeInMillis = 1000L,
+      context = viewModelScope.coroutineContext
+  )
+  ```
+</details>
+
+<details>
   <summary><code>merge</code></summary>
 
   Returns a [LiveData] emitting each value emitted by any of the given LiveData.
@@ -155,12 +177,37 @@
   ```
 
   ```kotlin
-  val userLiveData: LiveData<User> = ...
-  val avatarUrlLiveData: LiveData<String> = ...
+  val userLiveData: LiveData<User> = // ...
+  val avatarUrlLiveData: LiveData<String> = // ...
   val userWithAvatar: LiveData<UserWithAvatar> =
       combineLatest(userLiveData, avatarUrlLiveData) { user, avatarUrl ->
           UserWithAvatar(user, avatarUrl)
       }
+  ```
+</details>
+
+<details>
+  <summary><code>switch</code></summary>
+
+  Converts [LiveData] that emits other LiveData into a single LiveData that emits the items emitted by the most
+  recently emitted LiveData.
+
+  ```kotlin
+  val sourcesLiveData: LiveData<LiveData<String>> = // ...
+  val resultLiveData: LiveData<String?> = sourcesLiveData.switch()
+  ```
+</details>
+
+<details>
+  <summary><code>groupBy</code></summary>
+
+  Returns a `GroupedLiveData` providing a set of [LiveData], each emitting a different subset of values from this
+  LiveData, based on the result of the given `keySelector` function.
+
+  ```kotlin
+  val userLiveData: LiveData<User> = // ...
+  val userByStatusLiveData: GroupedLiveData<UserStatus, User> = errorLiveData.groupBy { user -> user.status }
+  val activeUserLiveData: LiveData<User> = userByStatusLiveData[UserStatus.ACTIVE]
   ```
 </details>
 
@@ -244,5 +291,6 @@
 [lifecycle-livedata-test-junit5-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit5/
 
 [LiveData]: https://developer.android.com/reference/androidx/lifecycle/LiveData
+[MediatorLiveData]: https://developer.android.com/reference/androidx/lifecycle/MediatorLiveData
 [InstantTaskExecutorRule]: https://developer.android.com/reference/androidx/arch/core/executor/testing/InstantTaskExecutorRule
 [TestCoroutineDispatcher]: https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-test/kotlinx.coroutines.test/-test-coroutine-dispatcher/
