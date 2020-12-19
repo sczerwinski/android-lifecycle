@@ -17,31 +17,39 @@
 
 package it.czerwinski.android.lifecycle.livedata.test.junit5
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.liveData
+import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
 import io.mockk.verifySequence
+import it.czerwinski.android.lifecycle.livedata.test.junit4.TestCoroutineDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
 @ExperimentalCoroutinesApi
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class, TestCoroutineDispatcherExtension::class)
-@DisplayName("Tests for TestCoroutineDispatcherExtension")
-class TestCoroutineDispatcherExtensionTest {
+class TestCoroutineDispatcherRuleTest {
+
+    @Rule
+    @JvmField
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @Rule
+    @JvmField
+    val testCoroutineDispatcherRule = TestCoroutineDispatcherRule()
 
     @RelaxedMockK
     lateinit var intObserver: Observer<Int>
 
+    @Before
+    fun setUpMocks() {
+        MockKAnnotations.init(this, relaxUnitFun = true)
+    }
+
     @Test
-    @DisplayName(
-        value = "GIVEN mocked observer for CoroutineLiveData, " +
-            "WHEN verifySequence, " +
-            "THEN emitted values should be observed"
-    )
-    fun testWithTestCoroutineDispatcherExtension() {
+    fun testWithTestCoroutineDispatcherRule() {
         val liveData = liveData {
             emit(1)
         }

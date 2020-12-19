@@ -240,7 +240,53 @@
   ```
 </details>
 
-## LivaData Testing Utilities
+## LivaData Testing Utilities For JUnit4
+
+[![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit4)][lifecycle-livedata-test-junit4-release]
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit4?server=https%3A%2F%2Foss.sonatype.org)][lifecycle-livedata-test-junit4-snapshot]
+
+<details>
+  <summary>Kotlin</summary>
+
+  ```kotlin
+  dependencies {
+      testImplementation("junit:junit:4.13.1")
+      testImplementation("it.czerwinski.android.lifecycle:lifecycle-livedata-test-junit4:[VERSION]")
+  }
+  ```
+</details>
+
+<details>
+  <summary>Groovy</summary>
+
+  ```groovy
+  dependencies {
+      testImplementation 'junit:junit:4.13.1'
+      testImplementation 'it.czerwinski.android.lifecycle:lifecycle-livedata-test-junit4:[VERSION]'
+  }
+  ```
+</details>
+
+### JUnit4 Rules
+
+<details>
+  <summary><code>TestCoroutineDispatcherRule</code></summary>
+
+  JUnit4 test rule that swaps main coroutine dispatcher with [TestCoroutineDispatcher].
+
+  ```kotlin
+  class MyTestClass {
+
+      @Rule
+      @JvmField
+      val testCoroutineDispatcherRule = TestCoroutineDispatcherRule()
+
+      // ...
+  }
+  ```
+</details>
+
+## LivaData Testing Utilities For JUnit5
 
 [![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit5)][lifecycle-livedata-test-junit5-release]
 [![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit5?server=https%3A%2F%2Foss.sonatype.org)][lifecycle-livedata-test-junit5-snapshot]
@@ -303,8 +349,10 @@
 
 [ci-build]: https://github.com/sczerwinski/android-lifecycle/actions?query=workflow%3ABuild
 [lifecycle-livedata-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata/
+[lifecycle-livedata-test-junit4-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit4/
 [lifecycle-livedata-test-junit5-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit5/
 [lifecycle-livedata-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata/
+[lifecycle-livedata-test-junit4-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit4/
 [lifecycle-livedata-test-junit5-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit5/
 
 [LiveData]: https://developer.android.com/reference/androidx/lifecycle/LiveData
