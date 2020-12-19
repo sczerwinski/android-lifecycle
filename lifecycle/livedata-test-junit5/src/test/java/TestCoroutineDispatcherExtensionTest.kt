@@ -41,7 +41,7 @@ class TestCoroutineDispatcherExtensionTest {
             "WHEN verifySequence, " +
             "THEN emitted values should be observed"
     )
-    fun testWithoutTestCoroutineDispatcherExtension() {
+    fun testWithTestCoroutineDispatcherExtension() {
         val liveData = liveData {
             emit(1)
         }
