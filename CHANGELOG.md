@@ -2,16 +2,9 @@
 
 ## [Unreleased]
 ### Added
+- JUnit4 rules for testing LiveData:
+  - `TestCoroutineDispatcherRule`
 
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.0.0-BETA3]
 ### Changed
 - **BREAKING CHANGE:** Changed package names in `lifecycle-livedata` and `lifecycle-livedata-test-junit5`
