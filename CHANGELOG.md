@@ -5,6 +5,12 @@
 - JUnit4 rules for testing LiveData:
   - `TestCoroutineDispatcherRule`
 
+### Changed
+- Dependencies:
+  - Upgrade `io.gitlab.arturbosch.detekt` to `1.15.0`
+  - Upgrade `org.jetbrains.kotlinx:kotlinx-coroutines-test` to `1.4.2-native-mt`
+  - Upgrade `io.mockk:mockk` to `1.10.3-jdk8`
+
 ## [1.0.0-BETA3]
 ### Changed
 - **BREAKING CHANGE:** Changed package names in `lifecycle-livedata` and `lifecycle-livedata-test-junit5`
