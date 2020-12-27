@@ -1,17 +1,8 @@
 # Changelog
 
 ## [Unreleased]
-### Added
+No changes since 1.0.0-RC1
 
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.0.0-RC1]
 ### Added
 - JUnit4 rules for testing LiveData:
