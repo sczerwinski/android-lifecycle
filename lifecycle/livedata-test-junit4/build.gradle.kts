@@ -36,7 +36,7 @@ dependencies {
     api("androidx.arch.core:core-testing:2.1.0")
     api("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
 
-    testImplementation("io.mockk:mockk:1.10.3-jdk8")
+    testImplementation("io.mockk:mockk:1.10.4")
 }
 
 tasks {
