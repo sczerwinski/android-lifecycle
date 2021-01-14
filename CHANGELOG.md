@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+## [unspecified]
+### Added
 - `TestObserver` with assertions for observed values emitted by LiveData
 
 ### Changed
