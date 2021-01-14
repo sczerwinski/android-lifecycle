@@ -18,21 +18,15 @@
 package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verifySequence
 import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
+@ExtendWith(InstantTaskExecutorExtension::class)
 @DisplayName("Tests for setting default value to empty LiveData")
 class DefaultIfEmptyTest {
-
-    @RelaxedMockK
-    lateinit var stringObserver: Observer<String?>
 
     @Test
     @DisplayName(
@@ -42,18 +36,17 @@ class DefaultIfEmptyTest {
     )
     fun defaultIfEmptyObservedBeforeEmitted() {
         val source = MutableLiveData<String>()
-        val transformed = source.defaultIfEmpty(defaultValue = "default value")
 
-        transformed.observeForever(stringObserver)
+        val observer = source.defaultIfEmpty(defaultValue = "default value").test()
 
         source.postValue("real value 1")
         source.postValue("real value 2")
 
-        verifySequence {
-            stringObserver.onChanged("default value")
-            stringObserver.onChanged("real value 1")
-            stringObserver.onChanged("real value 2")
-        }
+        observer.assertValues(
+            "default value",
+            "real value 1",
+            "real value 2"
+        )
     }
 
     @Test
@@ -68,14 +61,14 @@ class DefaultIfEmptyTest {
 
         source.postValue("real value 1")
 
-        transformed.observeForever(stringObserver)
+        val observer = transformed.test()
 
         source.postValue("real value 2")
 
-        verifySequence {
-            stringObserver.onChanged("real value 1")
-            stringObserver.onChanged("real value 2")
-        }
+        observer.assertValues(
+            "real value 1",
+            "real value 2"
+        )
     }
 
     @Test
@@ -90,14 +83,14 @@ class DefaultIfEmptyTest {
 
         source.postValue(null)
 
-        transformed.observeForever(stringObserver)
+        val observer = transformed.test()
 
         source.postValue("real value 2")
 
-        verifySequence {
-            stringObserver.onChanged(null)
-            stringObserver.onChanged("real value 2")
-        }
+        observer.assertValues(
+            null,
+            "real value 2"
+        )
     }
 
     @Test
@@ -111,15 +104,14 @@ class DefaultIfEmptyTest {
 
         source.postValue("real value 1")
 
-        val transformed = source.defaultIfEmpty(defaultValue = "default value")
-        transformed.observeForever(stringObserver)
+        val observer = source.defaultIfEmpty(defaultValue = "default value").test()
 
         source.postValue("real value 2")
 
-        verifySequence {
-            stringObserver.onChanged("real value 1")
-            stringObserver.onChanged("real value 2")
-        }
+        observer.assertValues(
+            "real value 1",
+            "real value 2"
+        )
     }
 
     @Test
@@ -130,18 +122,17 @@ class DefaultIfEmptyTest {
     )
     fun defaultIfEmptyWithProducerObservedBeforeEmitted() {
         val source = MutableLiveData<String>()
-        val transformed = source.defaultIfEmpty<String> { "default value" }
 
-        transformed.observeForever(stringObserver)
+        val observer = source.defaultIfEmpty<String> { "default value" }.test()
 
         source.postValue("real value 1")
         source.postValue("real value 2")
 
-        verifySequence {
-            stringObserver.onChanged("default value")
-            stringObserver.onChanged("real value 1")
-            stringObserver.onChanged("real value 2")
-        }
+        observer.assertValues(
+            "default value",
+            "real value 1",
+            "real value 2"
+        )
     }
 
     @Test
@@ -156,14 +147,14 @@ class DefaultIfEmptyTest {
 
         source.postValue("real value 1")
 
-        transformed.observeForever(stringObserver)
+        val observer = transformed.test()
 
         source.postValue("real value 2")
 
-        verifySequence {
-            stringObserver.onChanged("real value 1")
-            stringObserver.onChanged("real value 2")
-        }
+        observer.assertValues(
+            "real value 1",
+            "real value 2"
+        )
     }
 
     @Test
@@ -178,14 +169,14 @@ class DefaultIfEmptyTest {
 
         source.postValue(null)
 
-        transformed.observeForever(stringObserver)
+        val observer = transformed.test()
 
         source.postValue("real value 2")
 
-        verifySequence {
-            stringObserver.onChanged(null)
-            stringObserver.onChanged("real value 2")
-        }
+        observer.assertValues(
+            null,
+            "real value 2"
+        )
     }
 
     @Test
@@ -199,14 +190,13 @@ class DefaultIfEmptyTest {
 
         source.postValue("real value 1")
 
-        val transformed = source.defaultIfEmpty<String> { throw AssertionError("Producer called") }
-        transformed.observeForever(stringObserver)
+        val observer = source.defaultIfEmpty<String> { throw AssertionError("Producer called") }.test()
 
         source.postValue("real value 2")
 
-        verifySequence {
-            stringObserver.onChanged("real value 1")
-            stringObserver.onChanged("real value 2")
-        }
+        observer.assertValues(
+            "real value 1",
+            "real value 2"
+        )
     }
 }

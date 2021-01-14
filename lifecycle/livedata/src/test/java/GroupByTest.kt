@@ -18,25 +18,16 @@
 package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.confirmVerified
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verifySequence
+import it.czerwinski.android.lifecycle.livedata.test.TestObserver
 import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
+@ExtendWith(InstantTaskExecutorExtension::class)
 @DisplayName("Tests for grouping emitted LiveData values")
 class GroupByTest {
-
-    @RelaxedMockK
-    lateinit var positiveIntObserver: Observer<Int>
-
-    @RelaxedMockK
-    lateinit var negativeIntObserver: Observer<Int>
 
     @Test
     @DisplayName(
@@ -47,8 +38,10 @@ class GroupByTest {
     fun delayStart() {
         val source = MutableLiveData<Int>()
         val grouped = source.groupBy { number -> number > 0 }
-        grouped[true].observeForever(positiveIntObserver)
-        grouped[false].observeForever(negativeIntObserver)
+
+        val combinedObserver = TestObserver.create<Int>()
+        val positiveObserver = grouped[true].test(downstream = combinedObserver)
+        val negativeObserver = grouped[false].test(downstream = combinedObserver)
 
         source.postValue(1)
         source.postValue(-1)
@@ -59,16 +52,8 @@ class GroupByTest {
         source.postValue(4)
         source.postValue(-4)
 
-        verifySequence {
-            positiveIntObserver.onChanged(1)
-            negativeIntObserver.onChanged(-1)
-            negativeIntObserver.onChanged(-2)
-            positiveIntObserver.onChanged(2)
-            negativeIntObserver.onChanged(-3)
-            positiveIntObserver.onChanged(3)
-            positiveIntObserver.onChanged(4)
-            negativeIntObserver.onChanged(-4)
-        }
-        confirmVerified(positiveIntObserver, negativeIntObserver)
+        positiveObserver.assertValues(1, 2, 3, 4)
+        negativeObserver.assertValues(-1, -2, -3, -4)
+        combinedObserver.assertValues(1, -1, -2, 2, -3, 3, 4, -4)
     }
 }

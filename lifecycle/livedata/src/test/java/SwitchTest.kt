@@ -19,21 +19,15 @@ package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verifySequence
 import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
+@ExtendWith(InstantTaskExecutorExtension::class)
 @DisplayName("Tests for switching LiveData")
 class SwitchTest {
-
-    @RelaxedMockK
-    lateinit var intObserver: Observer<Int>
 
     @Test
     @DisplayName(
@@ -43,8 +37,7 @@ class SwitchTest {
     )
     fun reduce() {
         val source = MutableLiveData<LiveData<Int>>()
-        val switched = source.switch()
-        switched.observeForever(intObserver)
+        val observer = source.switch().test()
 
         val liveData1 = MutableLiveData<Int>()
         val liveData2 = MutableLiveData<Int>()
@@ -61,14 +54,6 @@ class SwitchTest {
         liveData2.postValue(30)
         liveData2.postValue(40)
 
-        verifySequence {
-            intObserver.onChanged(1)
-            intObserver.onChanged(2)
-            intObserver.onChanged(3)
-            intObserver.onChanged(10)
-            intObserver.onChanged(20)
-            intObserver.onChanged(30)
-            intObserver.onChanged(40)
-        }
+        observer.assertValues(1, 2, 3, 10, 20, 30, 40)
     }
 }

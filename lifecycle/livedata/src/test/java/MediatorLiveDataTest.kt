@@ -19,21 +19,15 @@ package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verifySequence
 import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
+@ExtendWith(InstantTaskExecutorExtension::class)
 @DisplayName("Tests for MediatorLiveData extensions")
 class MediatorLiveDataTest {
-
-    @RelaxedMockK
-    lateinit var intObserver: Observer<Int?>
 
     @Test
     @DisplayName(
@@ -45,18 +39,14 @@ class MediatorLiveDataTest {
         val source = MutableLiveData<Int>()
         val mediatorLiveData = MediatorLiveData<Int>()
         mediatorLiveData.addDirectSource(source)
-        mediatorLiveData.observeForever(intObserver)
+
+        val observer = mediatorLiveData.test()
 
         source.postValue(1)
         source.postValue(2)
         source.postValue(3)
         source.postValue(4)
 
-        verifySequence {
-            intObserver.onChanged(1)
-            intObserver.onChanged(2)
-            intObserver.onChanged(3)
-            intObserver.onChanged(4)
-        }
+        observer.assertValues(1, 2, 3, 4)
     }
 }
