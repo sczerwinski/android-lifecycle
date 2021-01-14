@@ -22,6 +22,8 @@ import androidx.lifecycle.Observer
 
 /**
  * Creates a non-forwarding [TestObserver] observing all values emitted by this [LiveData].
+ *
+ * @since 1.1.0
  */
 fun <T> LiveData<T>.test(): TestObserver<T> {
     val observer = TestObserver.create<T>()
@@ -31,6 +33,8 @@ fun <T> LiveData<T>.test(): TestObserver<T> {
 
 /**
  * Creates a forwarding [TestObserver] observing all values emitted by this [LiveData].
+ *
+ * @since 1.1.0
  */
 fun <T> LiveData<T>.test(downstream: Observer<T>): TestObserver<T> {
     val observer = TestObserver.create(downstream)

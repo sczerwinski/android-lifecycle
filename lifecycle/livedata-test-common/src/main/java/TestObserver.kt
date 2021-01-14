@@ -22,6 +22,8 @@ import androidx.lifecycle.Observer
 
 /**
  * A callback testing values emitted by [LiveData].
+ *
+ * @since 1.1.0
  */
 @Suppress("TooManyFunctions")
 class TestObserver<T> internal constructor(
