@@ -4,6 +4,10 @@
 ### Added
 - `TestObserver` with assertions for observed values emitted by LiveData
 
+### Changed
+- Dependencies:
+  - Upgrade `org.jetbrains.changelog` to `1.0.1`
+
 ### Removed
 - Remove `io.mockk:mockk` test dependency
 
