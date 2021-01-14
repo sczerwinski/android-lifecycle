@@ -33,12 +33,12 @@ android {
 dependencies {
     implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
 
+    api(project(":lifecycle:livedata-test-common"))
+
     api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2-native-mt")
     api("androidx.arch.core:core-testing:2.1.0")
-    api("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-    testImplementation("io.mockk:mockk:1.10.4")
 }
 
 tasks {

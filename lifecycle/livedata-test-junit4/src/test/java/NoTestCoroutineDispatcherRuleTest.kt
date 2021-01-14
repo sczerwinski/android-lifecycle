@@ -15,15 +15,11 @@
  *
  */
 
-package it.czerwinski.android.lifecycle.livedata.test.junit5
+package it.czerwinski.android.lifecycle.livedata.test.junit4
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import androidx.lifecycle.liveData
-import io.mockk.MockKAnnotations
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.verifySequence
-import org.junit.Before
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.Rule
 import org.junit.Test
 
@@ -33,24 +29,10 @@ class NoTestCoroutineDispatcherRuleTest {
     @JvmField
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @RelaxedMockK
-    lateinit var intObserver: Observer<Int>
-
-    @Before
-    fun setUpMocks() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
-    }
-
-    @Test(expected = Exception::class)
+    @Test
     fun testWithoutTestCoroutineDispatcherRule() {
-        val liveData = liveData {
-            emit(1)
-        }
-
-        liveData.observeForever(intObserver)
-
-        verifySequence {
-            intObserver.onChanged(1)
-        }
+        liveData { emit(1) }
+            .test()
+            .assertNoValues()
     }
 }

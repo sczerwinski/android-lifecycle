@@ -240,6 +240,70 @@
   ```
 </details>
 
+## Common LivaData Testing Utilities
+
+[![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata-test-common)][lifecycle-livedata-test-common-release]
+[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/it.czerwinski.android.lifecycle/lifecycle-livedata-test-common?server=https%3A%2F%2Foss.sonatype.org)][lifecycle-livedata-test-common-snapshot]
+
+This package is included in both `lifecycle-livedata-test-junit4` and `lifecycle-livedata-test-junit5`.
+
+<details>
+  <summary>Kotlin</summary>
+
+  ```kotlin
+  dependencies {
+      testImplementation("junit:junit:4.13.1")
+      testImplementation("it.czerwinski.android.lifecycle:lifecycle-livedata-test-common:[VERSION]")
+  }
+  ```
+</details>
+
+<details>
+  <summary>Groovy</summary>
+
+  ```groovy
+  dependencies {
+      testImplementation 'junit:junit:4.13.1'
+      testImplementation 'it.czerwinski.android.lifecycle:lifecycle-livedata-test-common:[VERSION]'
+  }
+  ```
+</details>
+
+### Testing Observed Values
+
+<details>
+  <summary><code>TestObserver</code></summary>
+
+  A callback testing values emitted by [LiveData].
+
+  ```kotlin
+  class MyTestClass {
+
+      @Test
+      fun testMethod1() {
+          val liveData = MutableLiveData<Int>()
+
+          val observer = liveData.test()
+
+          observer.assertNoValues()
+      }
+
+      @Test
+      fun testMethod2() {
+          val liveData = MutableLiveData<Int>()
+
+          val observer = liveData.test()
+
+          liveData.postValue(1)
+          liveData.postValue(2)
+          liveData.postValue(3)
+
+          observer.assertValues(1, 2, 3)
+      }
+  }
+  ```
+</details>
+
 ## LivaData Testing Utilities For JUnit4
 
 [![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android.lifecycle/lifecycle-livedata-test-junit4)][lifecycle-livedata-test-junit4-release]
@@ -349,9 +413,11 @@
 
 [ci-build]: https://github.com/sczerwinski/android-lifecycle/actions?query=workflow%3ABuild
 [lifecycle-livedata-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata/
+[lifecycle-livedata-test-common-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata-test-common/
 [lifecycle-livedata-test-junit4-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit4/
 [lifecycle-livedata-test-junit5-release]: https://repo1.maven.org/maven2/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit5/
 [lifecycle-livedata-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata/
+[lifecycle-livedata-test-common-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata-test-common/
 [lifecycle-livedata-test-junit4-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit4/
 [lifecycle-livedata-test-junit5-snapshot]: https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/lifecycle/lifecycle-livedata-test-junit5/
 

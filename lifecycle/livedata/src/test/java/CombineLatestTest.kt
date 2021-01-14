@@ -18,30 +18,15 @@
 package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verifySequence
 import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
+@ExtendWith(InstantTaskExecutorExtension::class)
 @DisplayName("Tests for combining latest values of LiveData")
 class CombineLatestTest {
-
-    @RelaxedMockK
-    lateinit var pairObserver: Observer<Pair<Int?, Float?>?>
-
-    @RelaxedMockK
-    lateinit var tripleObserver: Observer<Triple<Int?, Float?, String?>?>
-
-    @RelaxedMockK
-    lateinit var listObserver: Observer<List<String?>?>
-
-    @RelaxedMockK
-    lateinit var stringObserver: Observer<String?>
 
     @Test
     @DisplayName(
@@ -53,20 +38,19 @@ class CombineLatestTest {
         val source1 = MutableLiveData<Int>()
         val source2 = MutableLiveData<Float>()
 
-        val combined = combineLatest(source1, source2)
-        combined.observeForever(pairObserver)
+        val observer = combineLatest(source1, source2).test()
 
         source1.postValue(1)
         source2.postValue(1f)
         source1.postValue(2)
         source2.postValue(2f)
 
-        verifySequence {
-            pairObserver.onChanged(1 to null)
-            pairObserver.onChanged(1 to 1f)
-            pairObserver.onChanged(2 to 1f)
-            pairObserver.onChanged(2 to 2f)
-        }
+        observer.assertValues(
+            1 to null,
+            1 to 1f,
+            2 to 1f,
+            2 to 2f
+        )
     }
 
     @Test
@@ -80,8 +64,7 @@ class CombineLatestTest {
         val source2 = MutableLiveData<Float>()
         val source3 = MutableLiveData<String>()
 
-        val combined = combineLatest(source1, source2, source3)
-        combined.observeForever(tripleObserver)
+        val observer = combineLatest(source1, source2, source3).test()
 
         source1.postValue(1)
         source2.postValue(1f)
@@ -90,14 +73,14 @@ class CombineLatestTest {
         source2.postValue(2f)
         source3.postValue("text2")
 
-        verifySequence {
-            tripleObserver.onChanged(Triple(first = 1, second = null, third = null))
-            tripleObserver.onChanged(Triple(first = 1, second = 1f, third = null))
-            tripleObserver.onChanged(Triple(first = 1, second = 1f, third = "text1"))
-            tripleObserver.onChanged(Triple(first = 2, second = 1f, third = "text1"))
-            tripleObserver.onChanged(Triple(first = 2, second = 2f, third = "text1"))
-            tripleObserver.onChanged(Triple(first = 2, second = 2f, third = "text2"))
-        }
+        observer.assertValues(
+            Triple(first = 1, second = null, third = null),
+            Triple(first = 1, second = 1f, third = null),
+            Triple(first = 1, second = 1f, third = "text1"),
+            Triple(first = 2, second = 1f, third = "text1"),
+            Triple(first = 2, second = 2f, third = "text1"),
+            Triple(first = 2, second = 2f, third = "text2")
+        )
     }
 
     @Test
@@ -112,8 +95,7 @@ class CombineLatestTest {
         val source3 = MutableLiveData<String>()
         val source4 = MutableLiveData<String>()
 
-        val combined = combineLatest(source1, source2, source3, source4)
-        combined.observeForever(listObserver)
+        val observer = combineLatest(source1, source2, source3, source4).test()
 
         source3.postValue("World")
         source4.postValue("!")
@@ -124,16 +106,16 @@ class CombineLatestTest {
         source1.postValue("Goodbye")
         source2.postValue(";")
 
-        verifySequence {
-            listObserver.onChanged(listOf(null, null, "World", null))
-            listObserver.onChanged(listOf(null, null, "World", "!"))
-            listObserver.onChanged(listOf("Hello", null, "World", "!"))
-            listObserver.onChanged(listOf("Hello", ",", "World", "!"))
-            listObserver.onChanged(listOf("Hello", ",", "Universe", "!"))
-            listObserver.onChanged(listOf("Hello", ",", "Universe", "."))
-            listObserver.onChanged(listOf("Goodbye", ",", "Universe", "."))
-            listObserver.onChanged(listOf("Goodbye", ";", "Universe", "."))
-        }
+        observer.assertValues(
+            listOf(null, null, "World", null),
+            listOf(null, null, "World", "!"),
+            listOf("Hello", null, "World", "!"),
+            listOf("Hello", ",", "World", "!"),
+            listOf("Hello", ",", "Universe", "!"),
+            listOf("Hello", ",", "Universe", "."),
+            listOf("Goodbye", ",", "Universe", "."),
+            listOf("Goodbye", ";", "Universe", ".")
+        )
     }
 
     @Test
@@ -146,20 +128,19 @@ class CombineLatestTest {
         val source1 = MutableLiveData<Int>()
         val source2 = MutableLiveData<Float>()
 
-        val combined = combineLatest(source1, source2) { a, b -> "$a, $b" }
-        combined.observeForever(stringObserver)
+        val observer = combineLatest(source1, source2) { a, b -> "$a, $b" }.test()
 
         source1.postValue(1)
         source2.postValue(1f)
         source1.postValue(2)
         source2.postValue(2f)
 
-        verifySequence {
-            stringObserver.onChanged("1, null")
-            stringObserver.onChanged("1, 1.0")
-            stringObserver.onChanged("2, 1.0")
-            stringObserver.onChanged("2, 2.0")
-        }
+        observer.assertValues(
+            "1, null",
+            "1, 1.0",
+            "2, 1.0",
+            "2, 2.0"
+        )
     }
 
     @Test
@@ -173,8 +154,7 @@ class CombineLatestTest {
         val source2 = MutableLiveData<Float>()
         val source3 = MutableLiveData<String>()
 
-        val combined = combineLatest(source1, source2, source3) { a, b, c -> "$a, $b, $c" }
-        combined.observeForever(stringObserver)
+        val observer = combineLatest(source1, source2, source3) { a, b, c -> "$a, $b, $c" }.test()
 
         source1.postValue(1)
         source2.postValue(1f)
@@ -183,14 +163,14 @@ class CombineLatestTest {
         source2.postValue(2f)
         source3.postValue("text2")
 
-        verifySequence {
-            stringObserver.onChanged("1, null, null")
-            stringObserver.onChanged("1, 1.0, null")
-            stringObserver.onChanged("1, 1.0, text1")
-            stringObserver.onChanged("2, 1.0, text1")
-            stringObserver.onChanged("2, 2.0, text1")
-            stringObserver.onChanged("2, 2.0, text2")
-        }
+        observer.assertValues(
+            "1, null, null",
+            "1, 1.0, null",
+            "1, 1.0, text1",
+            "2, 1.0, text1",
+            "2, 2.0, text1",
+            "2, 2.0, text2"
+        )
     }
 
     @Test
@@ -205,10 +185,9 @@ class CombineLatestTest {
         val source3 = MutableLiveData<String>()
         val source4 = MutableLiveData<String>()
 
-        val combined = combineLatest(source1, source2, source3, source4) { values ->
+        val observer = combineLatest(source1, source2, source3, source4) { values ->
             values.joinToString(separator = "")
-        }
-        combined.observeForever(stringObserver)
+        }.test()
 
         source3.postValue("World")
         source4.postValue("!")
@@ -219,15 +198,15 @@ class CombineLatestTest {
         source1.postValue("Goodbye")
         source2.postValue("; ")
 
-        verifySequence {
-            stringObserver.onChanged("nullnullWorldnull")
-            stringObserver.onChanged("nullnullWorld!")
-            stringObserver.onChanged("HellonullWorld!")
-            stringObserver.onChanged("Hello, World!")
-            stringObserver.onChanged("Hello, Universe!")
-            stringObserver.onChanged("Hello, Universe.")
-            stringObserver.onChanged("Goodbye, Universe.")
-            stringObserver.onChanged("Goodbye; Universe.")
-        }
+        observer.assertValues(
+            "nullnullWorldnull",
+            "nullnullWorld!",
+            "HellonullWorld!",
+            "Hello, World!",
+            "Hello, Universe!",
+            "Hello, Universe.",
+            "Goodbye, Universe.",
+            "Goodbye; Universe."
+        )
     }
 }

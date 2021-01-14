@@ -15,17 +15,12 @@
  *
  */
 
-package it.czerwinski.android.lifecycle.livedata.test.junit5
+package it.czerwinski.android.lifecycle.livedata.test.junit4
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import androidx.lifecycle.liveData
-import io.mockk.MockKAnnotations
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.verifySequence
-import it.czerwinski.android.lifecycle.livedata.test.junit4.TestCoroutineDispatcherRule
+import it.czerwinski.android.lifecycle.livedata.test.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -40,24 +35,10 @@ class TestCoroutineDispatcherRuleTest {
     @JvmField
     val testCoroutineDispatcherRule = TestCoroutineDispatcherRule()
 
-    @RelaxedMockK
-    lateinit var intObserver: Observer<Int>
-
-    @Before
-    fun setUpMocks() {
-        MockKAnnotations.init(this, relaxUnitFun = true)
-    }
-
     @Test
     fun testWithTestCoroutineDispatcherRule() {
-        val liveData = liveData {
-            emit(1)
-        }
-
-        liveData.observeForever(intObserver)
-
-        verifySequence {
-            intObserver.onChanged(1)
-        }
+        liveData { emit(1) }
+            .test()
+            .assertValue(1)
     }
 }

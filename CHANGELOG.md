@@ -2,16 +2,11 @@
 
 ## [Unreleased]
 ### Added
-
-### Changed
-
-### Deprecated
+- `TestObserver` with assertions for observed values emitted by LiveData
 
 ### Removed
+- Remove `io.mockk:mockk` test dependency
 
-### Fixed
-
-### Security
 ## [1.0.0]
 No changes since 1.0.0-RC1
 

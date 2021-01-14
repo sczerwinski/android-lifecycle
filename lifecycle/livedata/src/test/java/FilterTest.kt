@@ -18,21 +18,15 @@
 package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verifySequence
 import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
+@ExtendWith(InstantTaskExecutorExtension::class)
 @DisplayName("Tests for filtering LiveData")
 class FilterTest {
-
-    @RelaxedMockK
-    lateinit var intObserver: Observer<Int>
 
     @Test
     @DisplayName(
@@ -42,18 +36,14 @@ class FilterTest {
     )
     fun filter() {
         val source = MutableLiveData<Int>()
-        val filtered = source.filter { number -> number % 2 == 0 }
-        filtered.observeForever(intObserver)
+        val observer = source.filter { number -> number % 2 == 0 }.test()
 
         source.postValue(1)
         source.postValue(2)
         source.postValue(3)
         source.postValue(4)
 
-        verifySequence {
-            intObserver.onChanged(2)
-            intObserver.onChanged(4)
-        }
+        observer.assertValues(2, 4)
     }
 
     @Test
@@ -64,19 +54,14 @@ class FilterTest {
     )
     fun filterNotNull() {
         val source = MutableLiveData<Int?>()
-        val filtered = source.filterNotNull()
-        filtered.observeForever(intObserver)
+        val observer = source.filterNotNull().test()
 
         source.postValue(1)
         source.postValue(2)
         source.postValue(null)
         source.postValue(3)
 
-        verifySequence {
-            intObserver.onChanged(1)
-            intObserver.onChanged(2)
-            intObserver.onChanged(3)
-        }
+        observer.assertValues(1, 2, 3)
     }
 
     @Test
@@ -87,8 +72,7 @@ class FilterTest {
     )
     fun filterIsInstance() {
         val source = MutableLiveData<Any?>()
-        val filtered = source.filterIsInstance<Int>()
-        filtered.observeForever(intObserver)
+        val observer = source.filterIsInstance<Int>().test()
 
         source.postValue(1)
         source.postValue("text")
@@ -97,10 +81,6 @@ class FilterTest {
         source.postValue(3)
         source.postValue("4")
 
-        verifySequence {
-            intObserver.onChanged(1)
-            intObserver.onChanged(2)
-            intObserver.onChanged(3)
-        }
+        observer.assertValues(1, 2, 3)
     }
 }

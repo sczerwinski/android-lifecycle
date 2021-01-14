@@ -18,12 +18,9 @@
 package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verifySequence
 import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorExtension
 import it.czerwinski.android.lifecycle.livedata.test.junit5.TestCoroutineDispatcherExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.junit.jupiter.api.DisplayName
@@ -31,12 +28,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExperimentalCoroutinesApi
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class, TestCoroutineDispatcherExtension::class)
+@ExtendWith(InstantTaskExecutorExtension::class, TestCoroutineDispatcherExtension::class)
 @DisplayName("Tests for throttling LiveData")
 class ThrottleTest {
-
-    @RelaxedMockK
-    lateinit var intObserver: Observer<Int>
 
     @Test
     @DisplayName(
@@ -48,8 +42,7 @@ class ThrottleTest {
         val dispatcher = TestCoroutineDispatcher()
 
         val source = MutableLiveData<Int>()
-        val throttled = source.throttleWithTimeout(timeInMillis = 9_000L, context = dispatcher)
-        throttled.observeForever(intObserver)
+        val observer = source.throttleWithTimeout(timeInMillis = 9_000L, context = dispatcher).test()
 
         source.postValue(1)
         dispatcher.advanceTimeBy(delayTimeMillis = 8_000L)
@@ -66,10 +59,6 @@ class ThrottleTest {
         source.postValue(7)
         dispatcher.advanceTimeBy(delayTimeMillis = 10_000L)
 
-        verifySequence {
-            intObserver.onChanged(4)
-            intObserver.onChanged(5)
-            intObserver.onChanged(7)
-        }
+        observer.assertValues(4, 5, 7)
     }
 }

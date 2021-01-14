@@ -18,24 +18,15 @@
 package it.czerwinski.android.lifecycle.livedata
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verifySequence
 import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class, InstantTaskExecutorExtension::class)
+@ExtendWith(InstantTaskExecutorExtension::class)
 @DisplayName("Tests for reducing LiveData")
 class ReduceTest {
-
-    @RelaxedMockK
-    lateinit var stringObserver: Observer<String?>
-
-    @RelaxedMockK
-    lateinit var intObserver: Observer<Int>
 
     @Test
     @DisplayName(
@@ -45,20 +36,19 @@ class ReduceTest {
     )
     fun reduce() {
         val source = MutableLiveData<String>()
-        val reduced = source.reduce { a, b -> "$a, $b" }
-        reduced.observeForever(stringObserver)
+        val observer = source.reduce { a, b -> "$a, $b" }.test()
 
         source.postValue("first")
         source.postValue("second")
         source.postValue(null)
         source.postValue("third")
 
-        verifySequence {
-            stringObserver.onChanged("first")
-            stringObserver.onChanged("first, second")
-            stringObserver.onChanged("first, second, null")
-            stringObserver.onChanged("first, second, null, third")
-        }
+        observer.assertValues(
+            "first",
+            "first, second",
+            "first, second, null",
+            "first, second, null, third"
+        )
     }
 
     @Test
@@ -69,8 +59,7 @@ class ReduceTest {
     )
     fun reduceNotNull() {
         val source = MutableLiveData<Int>()
-        val reduced = source.reduceNotNull { a, b -> a + b }
-        reduced.observeForever(intObserver)
+        val observer = source.reduceNotNull { a, b -> a + b }.test()
 
         source.postValue(1)
         source.postValue(2)
@@ -78,11 +67,6 @@ class ReduceTest {
         source.postValue(3)
         source.postValue(4)
 
-        verifySequence {
-            intObserver.onChanged(1)
-            intObserver.onChanged(3)
-            intObserver.onChanged(6)
-            intObserver.onChanged(10)
-        }
+        observer.assertValues(1, 3, 6, 10)
     }
 }

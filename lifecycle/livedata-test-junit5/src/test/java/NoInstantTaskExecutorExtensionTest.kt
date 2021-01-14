@@ -18,20 +18,13 @@
 package it.czerwinski.android.lifecycle.livedata.test.junit5
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
+import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
 @DisplayName("Tests without InstantTaskExecutorExtension")
 class NoInstantTaskExecutorExtensionTest {
-
-    @RelaxedMockK
-    lateinit var intObserver: Observer<Int>
 
     @Test
     @DisplayName(
@@ -43,7 +36,7 @@ class NoInstantTaskExecutorExtensionTest {
         val liveData = MutableLiveData<Int>()
 
         assertThrows<RuntimeException> {
-            liveData.observeForever(intObserver)
+            liveData.test()
         }
     }
 }
