@@ -12,7 +12,8 @@
 ### Fixed
 
 ### Security
-## [unspecified]
+
+## [1.1.0-ALPHA1]
 ### Added
 - `TestObserver` with assertions for observed values emitted by LiveData
 
