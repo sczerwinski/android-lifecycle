@@ -1,17 +1,7 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
+No changes since 1.1.0-ALPHA1
 
 ## [1.1.0-ALPHA1]
 ### Added
