@@ -1,17 +1,11 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-
 ### Changed
+- Upgrade Gradle to 6.8
+- Dependencies:
+  - Upgrade Android Gradle Plugin to `4.1.2`
 
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.1.0-BETA1]
 No changes since 1.1.0-ALPHA1
 
