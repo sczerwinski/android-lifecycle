@@ -4,6 +4,7 @@
 ### Changed
 - Upgrade Gradle to 6.8
 - Dependencies:
+  - Upgrade Kotlin to `1.4.30`
   - Upgrade Android Gradle Plugin to `4.1.2`
 
 ## [1.1.0-BETA1]
