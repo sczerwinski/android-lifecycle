@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    implementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
 
     api(project(":lifecycle:livedata-test-common"))
 
