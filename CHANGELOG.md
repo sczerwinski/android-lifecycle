@@ -2,13 +2,14 @@
 
 ## [Unreleased]
 ### Changed
-- Upgrade Gradle to 6.8.2
+- Upgrade Gradle to `6.8.2`
 - Dependencies:
   - Upgrade `android-junit5` to `1.7.1.1`
+  - Upgrade `lifecycle-livedata-ktx` to `2.3.0`
 
 ## [1.1.0-RC1]
 ### Changed
-- Upgrade Gradle to 6.8
+- Upgrade Gradle to `6.8`
 - Dependencies:
   - Upgrade Kotlin to `1.4.30`
   - Upgrade Android Gradle Plugin to `4.1.2`

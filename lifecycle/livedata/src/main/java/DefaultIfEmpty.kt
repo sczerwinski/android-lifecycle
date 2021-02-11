@@ -17,6 +17,7 @@
 
 package it.czerwinski.android.lifecycle.livedata
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
@@ -24,6 +25,7 @@ import androidx.lifecycle.MediatorLiveData
  * Returns a [LiveData] that emits the values emitted by this LiveData or a specified default value if this LiveData has
  * not yet emitted any values at the time of observing.
  */
+@SuppressLint("NullSafeMutableLiveData") // defaultValue can only be null if T is nullable
 fun <T> LiveData<T>.defaultIfEmpty(defaultValue: T): LiveData<T> {
     val result = MediatorLiveData<T>()
     val observer = DistinguishedFirstTimeObserver<T>(
