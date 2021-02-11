@@ -1,17 +1,11 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-
 ### Changed
+- Upgrade Gradle to 6.8.2
+- Dependencies:
+  - Upgrade `android-junit5` to `1.7.1.1`
 
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.1.0-RC1]
 ### Changed
 - Upgrade Gradle to 6.8
