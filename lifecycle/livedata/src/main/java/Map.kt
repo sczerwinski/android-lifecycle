@@ -17,6 +17,7 @@
 
 package it.czerwinski.android.lifecycle.livedata
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
@@ -32,6 +33,7 @@ import androidx.lifecycle.MediatorLiveData
  * val userLiveData: LiveData<User> = userOptionLiveData.mapNotNull { user -> user.getOrNull() }
  * ```
  */
+@SuppressLint("NullSafeMutableLiveData") // After null check
 fun <T, R> LiveData<T>.mapNotNull(
     transform: (T) -> R?
 ): LiveData<R> {
