@@ -30,7 +30,7 @@ android {
 }
 
 dependencies {
-    implementation("junit:junit:4.13.1")
+    implementation("junit:junit:4.13.2")
 
     api(project(":lifecycle:livedata-test-common"))
 
