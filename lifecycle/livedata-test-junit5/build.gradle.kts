@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("de.mannodermaus.android-junit5")
-    id("io.gitlab.arturbosch.detekt") version "1.15.0"
+    id("io.gitlab.arturbosch.detekt") version "1.16.0"
     id("org.jetbrains.dokka")
     `maven-publish`
     signing
@@ -35,7 +35,7 @@ dependencies {
 
     api(project(":lifecycle:livedata-test-common"))
 
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2-native-mt")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3-native-mt")
     api("androidx.arch.core:core-testing:2.1.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
