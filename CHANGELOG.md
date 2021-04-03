@@ -2,8 +2,13 @@
 
 ## [Unreleased]
 ### Changed
+- Upgrade Gradle to `6.8.3`
 - Dependencies:
-  - Upgrade Kotlin to `1.4.31`
+  - Upgrade Kotlin to `1.4.32`
+  - Upgrade Android Gradle Plugin to `4.1.3`
+  - Upgrade `io.gitlab.arturbosch.detekt` to `1.16.0`
+  - Upgrade `org.jetbrains.kotlinx:kotlinx-coroutines-test` to `1.4.3-native-mt`
+  - Upgrade `lifecycle-livedata-ktx` to `2.3.1`
 
 ## [1.1.0]
 ### Changed
