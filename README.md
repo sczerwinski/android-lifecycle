@@ -42,6 +42,21 @@
   executed on subsequent values emitted by the source LiveData.
 </details>
 
+### LiveData Factory Methods
+
+<details>
+  <summary><code>intervalLiveData</code></summary>
+
+  Returns a [LiveData] emitting a sequence of integer values, spaced by a given `timeInMillis`.
+
+  ```kotlin
+  val fixedIntervalLiveData: LiveData<Int> = intervalLiveData(timeInMillis = 1000L)
+  val varyingIntervalLiveData: LiveData<Int> = intervalLiveData { index -> (index + 1) * 1000L }
+  ```
+</details>
+
+
+
 ### LiveData Transformations
 
 <details>

@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- `intervalLiveData` factory method
+
 ### Changed
 - Upgrade Gradle to `6.9`
 - Dependencies:
