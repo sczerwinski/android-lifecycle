@@ -4,11 +4,13 @@
 ### Changed
 - Upgrade Gradle to `6.9`
 - Dependencies:
-  - Upgrade Kotlin to `1.4.32`
-  - Upgrade Android Gradle Plugin to `4.1.3`
-  - Upgrade `io.gitlab.arturbosch.detekt` to `1.16.0`
-  - Upgrade `org.jetbrains.kotlinx:kotlinx-coroutines-test` to `1.4.3-native-mt`
+  - Upgrade Kotlin to `1.5.10`
+  - Upgrade Android Gradle Plugin to `4.2.1`
+  - Upgrade `io.gitlab.arturbosch.detekt` to `1.17.1`
+  - Upgrade `org.jetbrains.kotlinx:kotlinx-coroutines-test` to `1.5.0-native-mt`
   - Upgrade `lifecycle-livedata-ktx` to `2.3.1`
+  - Upgrade JUnit to `5.7.2`
+  - Upgrade Dokka to `1.4.32`
 
 ## [1.1.0]
 ### Changed

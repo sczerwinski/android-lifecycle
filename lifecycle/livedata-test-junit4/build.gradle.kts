@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    id("io.gitlab.arturbosch.detekt") version "1.16.0"
+    id("io.gitlab.arturbosch.detekt") version "1.17.1"
     id("org.jetbrains.dokka")
     `maven-publish`
     signing
@@ -34,7 +34,7 @@ dependencies {
 
     api(project(":lifecycle:livedata-test-common"))
 
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3-native-mt")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0-native-mt")
     api("androidx.arch.core:core-testing:2.1.0")
 }
 
