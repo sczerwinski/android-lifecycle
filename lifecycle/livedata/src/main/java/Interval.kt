@@ -32,6 +32,8 @@ import kotlin.coroutines.EmptyCoroutineContext
  * ```
  * val intervalLiveData: LiveData<Int> = intervalLiveData(timeInMillis = 1000L)
  * ```
+ *
+ * @since 1.2.0
  */
 fun intervalLiveData(
     timeInMillis: Long,
@@ -54,6 +56,8 @@ fun intervalLiveData(
  * ```
  * val intervalLiveData: LiveData<Int> = intervalLiveData { index -> (index + 1) * 1000L }
  * ```
+ *
+ * @since 1.2.0
  */
 fun intervalLiveData(
     context: CoroutineContext = EmptyCoroutineContext,
