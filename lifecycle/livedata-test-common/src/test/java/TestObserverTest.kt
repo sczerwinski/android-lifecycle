@@ -209,6 +209,98 @@ class TestObserverTest {
 
     @Test
     @DisplayName(
+        value = "GIVEN TestObserver with onChanged never called, " +
+                "WHEN assertLatestValue, " +
+                "THEN should throw AssertionError"
+    )
+    fun assertLatestValueNoValue() {
+        val observer = TestObserver.create<Int>()
+
+        assertThrows(AssertionError::class.java) {
+            observer.assertLatestValue(0)
+        }
+    }
+
+    @Test
+    @DisplayName(
+        value = "GIVEN TestObserver with onChanged called with wrong latest value, " +
+                "WHEN assertLatestValue, " +
+                "THEN should throw AssertionError"
+    )
+    fun assertLatestValueWrongValue() {
+        val observer = TestObserver.create<Int>()
+        observer.onChanged(0)
+        observer.onChanged(1)
+        observer.onChanged(2)
+
+        assertThrows(AssertionError::class.java) {
+            observer.assertLatestValue(0)
+        }
+    }
+
+    @Test
+    @DisplayName(
+        value = "GIVEN TestObserver with onChanged called with correct latest value, " +
+                "WHEN assertLatestValue, " +
+                "THEN should pass"
+    )
+    fun assertLatestValue() {
+        val observer = TestObserver.create<Int>()
+        observer.onChanged(0)
+        observer.onChanged(1)
+        observer.onChanged(2)
+
+        observer.assertLatestValue(2)
+    }
+
+    @Test
+    @DisplayName(
+        value = "GIVEN TestObserver with onChanged never called, " +
+                "WHEN assertLatestValue with predicate, " +
+                "THEN should throw AssertionError"
+    )
+    fun assertLatestValuePredicateNoValue() {
+        val observer = TestObserver.create<Int>()
+
+        assertThrows(AssertionError::class.java) {
+            observer.assertLatestValue { it == 0 }
+        }
+    }
+
+    @Test
+    @DisplayName(
+        value = "GIVEN TestObserver with onChanged called with wrong latest value, " +
+                "WHEN assertLatestValue with predicate, " +
+                "THEN should throw AssertionError"
+    )
+    fun assertLatestValuePredicateWrongValue() {
+        val observer = TestObserver.create<Int>()
+        observer.onChanged(0)
+        observer.onChanged(1)
+        observer.onChanged(2)
+
+        assertThrows(AssertionError::class.java) {
+            observer.assertLatestValue { it == 0 }
+        }
+    }
+
+    @Test
+    @DisplayName(
+        value = "GIVEN TestObserver with onChanged called with correct latest value, " +
+                "WHEN assertLatestValue with predicate, " +
+                "THEN should pass"
+    )
+    fun assertLatestValuePredicate() {
+        val observer = TestObserver.create<Int>()
+        observer.onChanged(0)
+        observer.onChanged(1)
+        observer.onChanged(2)
+
+        observer.assertLatestValue { it == 2 }
+    }
+
+    @Test
+    @DisplayName(
         value = "GIVEN TestObserver with onChanged called 2 times, " +
             "WHEN assertValues with 3 values, " +
             "THEN should throw AssertionError"

@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- `TestObserver.assertLatestValue()` (#72)
+
 ### Changed
 - Dependencies:
   - Upgrade Kotlin to `1.5.21`
