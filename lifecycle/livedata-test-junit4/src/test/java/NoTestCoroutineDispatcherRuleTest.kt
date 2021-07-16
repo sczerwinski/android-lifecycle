@@ -29,10 +29,9 @@ class NoTestCoroutineDispatcherRuleTest {
     @JvmField
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    @Test
+    @Test(expected = IllegalStateException::class)
     fun testWithoutTestCoroutineDispatcherRule() {
         liveData { emit(1) }
             .test()
-            .assertNoValues()
     }
 }
