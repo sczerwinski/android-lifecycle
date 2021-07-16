@@ -8,6 +8,9 @@
   - Upgrade `org.jetbrains.kotlinx:kotlinx-coroutines-test` to `1.5.1-native-mt`
   - Upgrade `org.jetbrains.changelog` to `1.2.0`
 
+### Fixed
+- Incorrect failure on `TestObserver.assertValueSet()` after observing duplicate values (#71)
+
 ## [1.2.0]
 ### Added
 - `intervalLiveData` factory method
