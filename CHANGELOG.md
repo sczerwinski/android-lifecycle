@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+## [1.3.0]
+### Added
 - `TestObserver.assertLatestValue()` (#72)
 
 ### Changed
