@@ -1,17 +1,13 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-
 ### Changed
+- Dependencies:
+  - Upgrade Kotlin to `1.5.21`
+  - Upgrade Android Gradle Plugin to `4.2.2`
+  - Upgrade `org.jetbrains.kotlinx:kotlinx-coroutines-test` to `1.5.1-native-mt`
+  - Upgrade `org.jetbrains.changelog` to `1.2.0`
 
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.2.0]
 ### Added
 - `intervalLiveData` factory method
