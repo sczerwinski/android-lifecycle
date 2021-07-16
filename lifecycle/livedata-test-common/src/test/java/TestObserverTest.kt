@@ -407,6 +407,21 @@ class TestObserverTest {
 
     @Test
     @DisplayName(
+        value = "GIVEN TestObserver with onChanged called 3 times with the same correct value, " +
+                "WHEN assertValueSet, " +
+                "THEN should pass"
+    )
+    fun assertValueSetDuplicates() {
+        val observer = TestObserver.create<Int>()
+        observer.onChanged(1)
+        observer.onChanged(1)
+        observer.onChanged(1)
+
+        observer.assertValueSet(listOf(1))
+    }
+
+    @Test
+    @DisplayName(
         value = "GIVEN TestObserver with onChanged called 2 times, " +
             "WHEN assertValueAt index 2, " +
             "THEN should throw AssertionError"

@@ -140,7 +140,7 @@ class TestObserver<T> internal constructor(
      * Asserts that this observer received only the specified [values], irrespective of the order.
      */
     fun assertValueSet(values: Collection<T>): TestObserver<T> {
-        if (this.values.size != values.size) {
+        if (this.values.toSet().size != values.size) {
             fail(
                 summary = "Value count does not match",
                 expectedMessage = "exactly ${values.size.toValuesCount()} in any order",
