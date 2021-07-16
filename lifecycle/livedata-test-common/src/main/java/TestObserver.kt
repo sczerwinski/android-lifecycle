@@ -121,6 +121,58 @@ class TestObserver<T> internal constructor(
     }
 
     /**
+     * Asserts that this observer received at least one [onChanged] value,
+     * and the latest received value was equal to the given [value].
+     *
+     * @since 1.3.0
+     */
+    fun assertLatestValue(value: T): TestObserver<T> {
+        if (values.size < 1) {
+            fail(
+                summary = "Value count does not match",
+                expectedMessage = "at least 1 value",
+                actualMessage = "exactly ${values.size.toValuesCount()}",
+                actualValues = values
+            )
+        }
+        if (values.last() != value) {
+            fail(
+                summary = "Latest observed value does not match",
+                expectedMessage = "latest value",
+                expectedValues = listOf(value),
+                actualMessage = "latest observed value",
+                actualValues = values.takeLast(1)
+            )
+        }
+        return this
+    }
+
+    /**
+     * Asserts that this observer received at least one [onChanged] value,
+     * and for the latest received value the given [predicate] returns `true`.
+     *
+     * @since 1.3.0
+     */
+    fun assertLatestValue(predicate: (T) -> Boolean): TestObserver<T> {
+        if (values.size < 1) {
+            fail(
+                summary = "Value count does not match",
+                expectedMessage = "at least 1 value matching the predicate",
+                actualMessage = "exactly ${values.size.toValuesCount()}",
+                actualValues = values
+            )
+        }
+        if (!predicate(values.last())) {
+            fail(
+                summary = "Value does not match the predicate",
+                actualMessage = "latest observed value",
+                actualValues = values.takeLast(1)
+            )
+        }
+        return this
+    }
+
+    /**
      * Asserts that this observer received only the specified [values] in the exact specified order.
      */
     fun assertValues(vararg values: T): TestObserver<T> {
