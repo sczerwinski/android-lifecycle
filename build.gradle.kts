@@ -29,7 +29,7 @@ allprojects {
 }
 
 plugins {
-    id("org.jetbrains.changelog") version "1.2.0"
+    id("org.jetbrains.changelog") version "1.3.0"
 }
 
 changelog {
