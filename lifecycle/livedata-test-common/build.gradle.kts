@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("de.mannodermaus.android-junit5")
-    id("io.gitlab.arturbosch.detekt") version "1.17.1"
+    id("io.gitlab.arturbosch.detekt") version "1.18.0"
     id("org.jetbrains.dokka")
     `maven-publish`
     signing
@@ -10,13 +10,11 @@ plugins {
 
 android {
 
-    compileSdkVersion(30)
+    compileSdk = 31
 
     defaultConfig {
-        minSdkVersion(14)
-        targetSdkVersion(30)
-        versionCode = 1
-        versionName = "${project.version}"
+        minSdk = 14
+        targetSdk = 31
     }
 
     buildTypes {

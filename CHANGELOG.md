@@ -1,17 +1,15 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-
 ### Changed
+- Upgrade Gradle to `7.2`
+- Dependencies:
+  - Upgrade Kotlin to `1.5.30`
+  - Upgrade Android Gradle Plugin to `7.0.1`
+  - Upgrade `org.jetbrains.changelog` to `1.3.0`
+  - Upgrade `io.gitlab.arturbosch.detekt` to `1.18.0`
+  - Upgrade Dokka to `1.5.0`
 
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
 ## [1.3.0]
 ### Added
 - `TestObserver.assertLatestValue()` (#72)
