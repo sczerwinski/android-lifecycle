@@ -21,6 +21,7 @@ import androidx.lifecycle.liveData
 import it.czerwinski.android.lifecycle.livedata.test.test
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(InstantTaskExecutorExtension::class)
@@ -34,8 +35,12 @@ class NoTestCoroutineDispatcherExtensionTest {
             "THEN should throw exception"
     )
     fun testWithoutTestCoroutineDispatcherExtension() {
-        liveData { emit(1) }
-            .test()
-            .assertNoValues()
+        val liveData = liveData {
+            emit(1)
+        }
+
+        assertThrows<Exception> {
+            liveData.test().values()
+        }
     }
 }
