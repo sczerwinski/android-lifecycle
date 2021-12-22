@@ -10,7 +10,7 @@
   - Upgrade `org.jetbrains.changelog` to `1.3.1`
   - Upgrade JUnit to `5.8.2`
   - Upgrade `android-junit5` to `1.8.2.0`
-  - Upgrade `kotlinx-coroutines-test` to `1.5.2-native-mt`
+  - Upgrade `kotlinx-coroutines-test` to `1.6.0-native-mt`
   - Upgrade `io.gitlab.arturbosch.detekt` to `1.19.0`
   - Upgrade Dokka to `1.6.0`
 
