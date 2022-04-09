@@ -21,7 +21,7 @@ import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorE
 import it.czerwinski.android.lifecycle.livedata.test.junit5.TestCoroutineDispatcherExtension
 import it.czerwinski.android.lifecycle.livedata.test.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
@@ -40,14 +40,14 @@ class IntervalTest {
     )
     @MethodSource("fixedIntervalTestData")
     fun fixedInterval(intervalInMillis: Long, elapsedTimeInMillis: Long, expectedValuesCount: Int) {
-        val dispatcher = TestCoroutineDispatcher()
+        val dispatcher = UnconfinedTestDispatcher()
 
         val observer = intervalLiveData(
             timeInMillis = intervalInMillis,
             context = dispatcher
         ).test()
 
-        dispatcher.advanceTimeBy(delayTimeMillis = elapsedTimeInMillis)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = elapsedTimeInMillis); runCurrent() }
 
         observer.assertValues(0 until expectedValuesCount)
     }
@@ -59,13 +59,13 @@ class IntervalTest {
     )
     @MethodSource("varyingIntervalTestData")
     fun varyingInterval(elapsedTimeInMillis: Long, expectedValuesCount: Int) {
-        val dispatcher = TestCoroutineDispatcher()
+        val dispatcher = UnconfinedTestDispatcher()
 
         val observer = intervalLiveData(context = dispatcher) { index ->
             VARYING_INTERVAL_FACTOR * (index + 1)
         }.test()
 
-        dispatcher.advanceTimeBy(delayTimeMillis = elapsedTimeInMillis)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = elapsedTimeInMillis); runCurrent() }
 
         observer.assertValues(0 until expectedValuesCount)
     }

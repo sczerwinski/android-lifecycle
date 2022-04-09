@@ -22,7 +22,7 @@ import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorE
 import it.czerwinski.android.lifecycle.livedata.test.junit5.TestCoroutineDispatcherExtension
 import it.czerwinski.android.lifecycle.livedata.test.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -39,25 +39,25 @@ class DelayTest {
             "THEN only the latest value from before delay expired should be observed"
     )
     fun delayStart() {
-        val dispatcher = TestCoroutineDispatcher()
+        val dispatcher = UnconfinedTestDispatcher()
 
         val source = MutableLiveData<Int>()
         val observer = source.delayStart(timeInMillis = 9_000L, context = dispatcher).test()
 
         source.postValue(1)
-        dispatcher.advanceTimeBy(delayTimeMillis = 4_000L)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = 4_000L); runCurrent() }
         source.postValue(2)
-        dispatcher.advanceTimeBy(delayTimeMillis = 4_000L)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = 4_000L); runCurrent() }
         source.postValue(3)
-        dispatcher.advanceTimeBy(delayTimeMillis = 4_000L)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = 4_000L); runCurrent() }
         source.postValue(4)
-        dispatcher.advanceTimeBy(delayTimeMillis = 10_000L)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = 10_000L); runCurrent() }
         source.postValue(5)
-        dispatcher.advanceTimeBy(delayTimeMillis = 10_000L)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = 10_000L); runCurrent() }
         source.postValue(6)
-        dispatcher.advanceTimeBy(delayTimeMillis = 4_000L)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = 4_000L); runCurrent() }
         source.postValue(7)
-        dispatcher.advanceTimeBy(delayTimeMillis = 10_000L)
+        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = 10_000L); runCurrent() }
 
         observer.assertValues(3, 4, 5, 6, 7)
     }
