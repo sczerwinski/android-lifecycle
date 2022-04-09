@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- `TestCoroutineDispatcherRule` and `TestCoroutineDispatcherExtension` provide `TestCoroutineScheduler` to the tests
+
 ### Changed
 - Replace usages of `TestCoroutineDispatcher` with `UnconfinedTestDispatcher`
 - Upgrade Gradle to `7.4.2`
