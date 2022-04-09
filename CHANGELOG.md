@@ -2,17 +2,17 @@
 
 ## [Unreleased]
 ### Changed
-- Upgrade Gradle to `7.2`
+- Upgrade Gradle to `7.4.2`
 - Dependencies:
-  - Upgrade Kotlin to `1.6.10`
-  - Upgrade Android Gradle Plugin to `7.0.4`
-  - Upgrade `lifecycle-livedata-ktx` to `2.4.0`
+  - Upgrade Kotlin to `1.6.20`
+  - Upgrade Android Gradle Plugin to `7.1.3`
+  - Upgrade `lifecycle-livedata-ktx` to `2.4.1`
   - Upgrade `org.jetbrains.changelog` to `1.3.1`
   - Upgrade JUnit to `5.8.2`
   - Upgrade `android-junit5` to `1.8.2.0`
-  - Upgrade `kotlinx-coroutines-test` to `1.6.0-native-mt`
+  - Upgrade `kotlinx-coroutines-test` to `1.6.1-native-mt`
   - Upgrade `io.gitlab.arturbosch.detekt` to `1.19.0`
-  - Upgrade Dokka to `1.6.0`
+  - Upgrade Dokka to `1.6.10`
 
 ## [1.3.0]
 ### Added
