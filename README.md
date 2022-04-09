@@ -322,7 +322,7 @@ class MyTestClass {
     @JvmField
     val testCoroutineDispatcherRule = TestCoroutineDispatcherRule()
 
-    val testCoroutineScheduler = testCoroutineDispatcherRule.scheduler
+    val testCoroutineScheduler get() = testCoroutineDispatcherRule.scheduler
 
     // ...
 }

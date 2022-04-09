@@ -22,7 +22,6 @@ import it.czerwinski.android.lifecycle.livedata.test.junit5.TestCoroutineDispatc
 import it.czerwinski.android.lifecycle.livedata.test.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScheduler
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.extension.ExtendWith
@@ -63,13 +62,11 @@ class IntervalTest {
     )
     @MethodSource("varyingIntervalTestData")
     fun varyingInterval(elapsedTimeInMillis: Long, expectedValuesCount: Int) {
-        val dispatcher = UnconfinedTestDispatcher()
-
-        val observer = intervalLiveData(context = dispatcher) { index ->
+        val observer = intervalLiveData { index ->
             VARYING_INTERVAL_FACTOR * (index + 1)
         }.test()
 
-        dispatcher.scheduler.apply { advanceTimeBy(delayTimeMillis = elapsedTimeInMillis); runCurrent() }
+        scheduler.apply { advanceTimeBy(delayTimeMillis = elapsedTimeInMillis); runCurrent() }
 
         observer.assertValues(0 until expectedValuesCount)
     }
