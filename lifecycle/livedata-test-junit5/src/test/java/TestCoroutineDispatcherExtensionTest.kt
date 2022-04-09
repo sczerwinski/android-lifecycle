@@ -20,6 +20,8 @@ package it.czerwinski.android.lifecycle.livedata.test.junit5
 import androidx.lifecycle.liveData
 import it.czerwinski.android.lifecycle.livedata.test.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -32,12 +34,34 @@ class TestCoroutineDispatcherExtensionTest {
     @Test
     @DisplayName(
         value = "GIVEN mocked observer for CoroutineLiveData, " +
-            "WHEN verifySequence, " +
+            "WHEN assertValue, " +
             "THEN emitted values should be observed"
     )
     fun testWithTestCoroutineDispatcherExtension() {
         liveData { emit(1) }
             .test()
             .assertValue(1)
+    }
+
+    @Test
+    @DisplayName(
+        value = "GIVEN mocked observer for CoroutineLiveData, " +
+                "WHEN advance time, " +
+                "AND assertValues, " +
+                "THEN emitted values should be observed at the current time"
+    )
+    fun testWithTestCoroutineScheduler(scheduler: TestCoroutineScheduler) {
+        val observer = liveData {
+            emit(1)
+            delay(1000L)
+            emit(2)
+            delay(1000L)
+            emit(3)
+        }.test()
+
+        scheduler.advanceTimeBy(1500L)
+        scheduler.runCurrent()
+
+        observer.assertValues(1, 2)
     }
 }
