@@ -19,21 +19,30 @@ package it.czerwinski.android.lifecycle.livedata.test.junit4
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
 /**
- * JUnit4 test rule that swaps main coroutine dispatcher with [TestCoroutineDispatcher].
+ * JUnit4 test rule that swaps main coroutine dispatcher with [UnconfinedTestDispatcher].
  */
 @ExperimentalCoroutinesApi
 class TestCoroutineDispatcherRule : TestWatcher() {
 
+    private lateinit var _scheduler: TestCoroutineScheduler
+
+    /**
+     * Test coroutine scheduler.
+     */
+    val scheduler: TestCoroutineScheduler get() = _scheduler
+
     override fun starting(description: Description?) {
         super.starting(description)
-        Dispatchers.setMain(TestCoroutineDispatcher())
+        _scheduler = TestCoroutineScheduler()
+        Dispatchers.setMain(UnconfinedTestDispatcher(_scheduler))
     }
 
     override fun finished(description: Description?) {

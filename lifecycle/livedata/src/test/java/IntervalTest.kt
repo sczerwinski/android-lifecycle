@@ -21,7 +21,8 @@ import it.czerwinski.android.lifecycle.livedata.test.junit5.InstantTaskExecutorE
 import it.czerwinski.android.lifecycle.livedata.test.junit5.TestCoroutineDispatcherExtension
 import it.czerwinski.android.lifecycle.livedata.test.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
@@ -33,6 +34,13 @@ import org.junit.jupiter.params.provider.MethodSource
 @DisplayName("Tests for interval LiveData")
 class IntervalTest {
 
+    private lateinit var scheduler: TestCoroutineScheduler
+
+    @BeforeEach
+    fun setScheduler(scheduler: TestCoroutineScheduler) {
+        this.scheduler = scheduler
+    }
+
     @ParameterizedTest(
         name = "GIVEN fixed interval of {0}ms, " +
                 "WHEN advancing time by {1}ms, " +
@@ -40,14 +48,9 @@ class IntervalTest {
     )
     @MethodSource("fixedIntervalTestData")
     fun fixedInterval(intervalInMillis: Long, elapsedTimeInMillis: Long, expectedValuesCount: Int) {
-        val dispatcher = TestCoroutineDispatcher()
+        val observer = intervalLiveData(timeInMillis = intervalInMillis).test()
 
-        val observer = intervalLiveData(
-            timeInMillis = intervalInMillis,
-            context = dispatcher
-        ).test()
-
-        dispatcher.advanceTimeBy(delayTimeMillis = elapsedTimeInMillis)
+        scheduler.apply { advanceTimeBy(delayTimeMillis = elapsedTimeInMillis); runCurrent() }
 
         observer.assertValues(0 until expectedValuesCount)
     }
@@ -59,13 +62,11 @@ class IntervalTest {
     )
     @MethodSource("varyingIntervalTestData")
     fun varyingInterval(elapsedTimeInMillis: Long, expectedValuesCount: Int) {
-        val dispatcher = TestCoroutineDispatcher()
-
-        val observer = intervalLiveData(context = dispatcher) { index ->
+        val observer = intervalLiveData { index ->
             VARYING_INTERVAL_FACTOR * (index + 1)
         }.test()
 
-        dispatcher.advanceTimeBy(delayTimeMillis = elapsedTimeInMillis)
+        scheduler.apply { advanceTimeBy(delayTimeMillis = elapsedTimeInMillis); runCurrent() }
 
         observer.assertValues(0 until expectedValuesCount)
     }

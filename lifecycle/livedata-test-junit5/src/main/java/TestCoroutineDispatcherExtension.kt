@@ -19,24 +19,54 @@ package it.czerwinski.android.lifecycle.livedata.test.junit5
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.extension.AfterEachCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
+import org.junit.jupiter.api.extension.ParameterContext
+import org.junit.jupiter.api.extension.support.TypeBasedParameterResolver
 
 /**
- * JUnit5 extension that swaps main coroutine dispatcher with [TestCoroutineDispatcher].
+ * JUnit5 extension that swaps main coroutine dispatcher with an [UnconfinedTestDispatcher].
+ *
+ * Values of method parameters of type [TestCoroutineScheduler] will be resolved as
+ * the scheduler of the [UnconfinedTestDispatcher].
+ *
+ * Example:
+ * ```
+ * @ExtendWith(TestCoroutineDispatcherExtension::class)
+ * class MyTestClass {
+ *
+ *     @Test
+ *     fun someTest(scheduler: TestCoroutineScheduler) {
+ *         // ...
+ *         scheduler.advanceTimeBy(delayTimeMillis = 1000L)
+ *         scheduler.runCurrent()
+ *         // ...
+ *     }
+ * }
+ * ```
  */
 @ExperimentalCoroutinesApi
-class TestCoroutineDispatcherExtension : BeforeEachCallback, AfterEachCallback {
+class TestCoroutineDispatcherExtension : TypeBasedParameterResolver<TestCoroutineScheduler>(),
+    BeforeEachCallback,
+    AfterEachCallback {
 
-    override fun beforeEach(context: ExtensionContext?) {
-        Dispatchers.setMain(TestCoroutineDispatcher())
+    private val scheduler: TestCoroutineScheduler = TestCoroutineScheduler()
+
+    override fun resolveParameter(
+        parameterContext: ParameterContext?,
+        extensionContext: ExtensionContext?
+    ): TestCoroutineScheduler = scheduler
+
+    override fun beforeEach(context: ExtensionContext) {
+        Dispatchers.setMain(UnconfinedTestDispatcher(scheduler))
     }
 
-    override fun afterEach(context: ExtensionContext?) {
+    override fun afterEach(context: ExtensionContext) {
         Dispatchers.resetMain()
     }
 }

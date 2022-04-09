@@ -21,6 +21,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.liveData
 import it.czerwinski.android.lifecycle.livedata.test.test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.TestCoroutineScheduler
 import org.junit.Rule
 import org.junit.Test
 
@@ -35,10 +37,28 @@ class TestCoroutineDispatcherRuleTest {
     @JvmField
     val testCoroutineDispatcherRule = TestCoroutineDispatcherRule()
 
+    private val scheduler get() = testCoroutineDispatcherRule.scheduler
+
     @Test
     fun testWithTestCoroutineDispatcherRule() {
         liveData { emit(1) }
             .test()
             .assertValue(1)
+    }
+
+    @Test
+    fun testWithTestCoroutineScheduler() {
+        val observer = liveData {
+            emit(1)
+            delay(1000L)
+            emit(2)
+            delay(1000L)
+            emit(3)
+        }.test()
+
+        scheduler.advanceTimeBy(1500L)
+        scheduler.runCurrent()
+
+        observer.assertValues(1, 2)
     }
 }
