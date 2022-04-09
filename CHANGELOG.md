@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.4.0]
+### Added
 - `TestCoroutineDispatcherRule` and `TestCoroutineDispatcherExtension` provide `TestCoroutineScheduler` to the tests
 
 ### Changed
@@ -62,7 +75,6 @@
   - Upgrade Android Gradle Plugin to `4.1.2`
 
 ## [1.1.0-BETA1]
-No changes since 1.1.0-ALPHA1
 
 ## [1.1.0-ALPHA1]
 ### Added
@@ -76,7 +88,6 @@ No changes since 1.1.0-ALPHA1
 - Remove `io.mockk:mockk` test dependency
 
 ## [1.0.0]
-No changes since 1.0.0-RC1
 
 ## [1.0.0-RC1]
 ### Added
