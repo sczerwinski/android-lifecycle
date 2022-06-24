@@ -32,7 +32,7 @@ dependencies {
 
     api(project(":lifecycle:livedata-test-common"))
 
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1-native-mt")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.3-native-mt")
     api("androidx.arch.core:core-testing:2.1.0")
 }
 
