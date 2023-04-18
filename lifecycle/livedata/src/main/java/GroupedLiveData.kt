@@ -35,7 +35,7 @@ class GroupedLiveData<K, V>(private val keySelector: (V) -> K): MediatorLiveData
     operator fun get(key: K): LiveData<V> = getOrCreate(key)
 
     private fun getOrCreate(key: K) = synchronized(this) {
-        results.getOrPut(key) { MediatorLiveData<V>() }.also { it.addSource(this) { } }
+        results.getOrPut(key) { MediatorLiveData<V>().also { it.addSource(this) { } } }
     }
 
     override fun setValue(value: V) {
