@@ -1,8 +1,6 @@
 # Changelog
 
 ## [Unreleased]
-### Added
-
 ### Changed
 - Upgrade Gradle to `8.0.2`
 - Use Java 17
@@ -21,14 +19,8 @@
   - Upgrade `org.jetbrains.changelog` to `2.0.0`
   - Upgrade Dokka to `1.8.10`
 
-### Deprecated
-
-### Removed
-
 ### Fixed
-- Adding the same source to `MediatorLiveData` multiple times
-
-### Security
+- Prevent adding the same source to `MediatorLiveData` multiple times
 
 ## [1.4.0]
 ### Added
