@@ -1,6 +1,20 @@
 # Changelog
 
 ## [Unreleased]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.5.0] - 2023-04-18
 ### Changed
 - Upgrade Gradle to `8.0.2`
 - Use Java 17
