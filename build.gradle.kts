@@ -7,9 +7,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20")
-        classpath("com.android.tools.build:gradle:7.1.3")
-        classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
+        classpath("com.android.tools.build:gradle:8.0.0")
+        classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.1")
     }
 }
 
@@ -29,7 +29,7 @@ allprojects {
 }
 
 plugins {
-    id("org.jetbrains.changelog") version "1.3.1"
+    id("org.jetbrains.changelog") version "2.0.0"
 }
 
 changelog {

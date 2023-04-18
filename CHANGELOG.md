@@ -4,12 +4,29 @@
 ### Added
 
 ### Changed
+- Upgrade Gradle to `8.0.2`
+- Use Java 17
+- Change target SDK to `33`
+- Library dependencies:
+  - Upgrade Kotlin to `1.8.20`
+  - Upgrade Android Gradle Plugin to `8.0.0`
+  - Upgrade `lifecycle-livedata-ktx` to `2.6.1`
+  - Upgrade `kotlinx-coroutines-test` to `1.6.4`
+  - Upgrade `core-testing` to `2.2.0`
+- Test dependencies:
+  - Upgrade JUnit to `5.9.2`
+  - Upgrade `de.mannodermaus.gradle.plugins:android-junit5` to `1.8.2.1`
+- Build dependencies:
+  - Upgrade `io.gitlab.arturbosch.detekt` to `1.22.0`
+  - Upgrade `org.jetbrains.changelog` to `2.0.0`
+  - Upgrade Dokka to `1.8.10`
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Adding the same source to `MediatorLiveData` multiple times
 
 ### Security
 

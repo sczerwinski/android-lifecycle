@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("de.mannodermaus.android-junit5")
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
     id("org.jetbrains.dokka")
     `maven-publish`
     signing
@@ -10,11 +10,12 @@ plugins {
 
 android {
 
-    compileSdk = 31
+    compileSdk = 33
+
+    namespace = "it.czerwinski.android.lifecycle.livedata.test"
 
     defaultConfig {
         minSdk = 14
-        targetSdk = 31
     }
 
     buildTypes {
@@ -29,11 +30,16 @@ android {
 }
 
 dependencies {
-    api("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
+    api("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
     testImplementation(project(":lifecycle:livedata-test-junit5"))
+}
+
+detekt {
+    config = files("../../config/detekt/detekt.yml")
+    buildUponDefaultConfig  = true
 }
 
 tasks {
@@ -52,4 +58,8 @@ afterEvaluate {
         repositories { sonatype(project) }
     }
     signing { signAllMavenPublications(project, publishing) }
+    tasks {
+        getByName("generateMetadataFileForLibAarPublication")
+            .dependsOn(getByName("sourcesJar"))
+    }
 }
