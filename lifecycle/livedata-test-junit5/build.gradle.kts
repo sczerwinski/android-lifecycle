@@ -37,7 +37,7 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     api("androidx.arch.core:core-testing:2.2.0")
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 }
 
 detekt {
