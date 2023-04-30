@@ -5,6 +5,11 @@
 ### Added
 
 ### Changed
+- Library dependencies:
+  - Upgrade Kotlin to `1.8.21`
+- Test dependencies:
+  - Upgrade JUnit to `5.9.3`
+  - Upgrade `de.mannodermaus.gradle.plugins:android-junit5` to `1.9.3.0`
 
 ### Deprecated
 
